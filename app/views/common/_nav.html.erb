@@ -28,6 +28,15 @@
       <%= link_to "Sign Up", new_user_registration_path, class: "btn btn-outline-light mr-3"%>
       <%= link_to "Sign In", new_user_session_path, class: "btn btn-outline-light mr-3"%>
     <% end %>
-    <%= fa_icon "shopping-cart", class: "cart-icon" %>
+    <% if !user_signed_in? || current_user.cart.nil? %>
+      <%= link_to(raw(fa_icon "shopping-cart", class: "cart-icon"), carts_path)%>
+    <% else %>
+      <%= link_to carts_path do%>
+        <div class="cart-filled-div">
+          <span class="cart-badge badge badge-danger"><%= current_user.cart.cart_order_items.count %></span>
+          <%= fa_icon "shopping-cart", class: "cart-icon" %>
+        </div>
+      <% end %>
+    <% end %>
   </div>
 </nav>

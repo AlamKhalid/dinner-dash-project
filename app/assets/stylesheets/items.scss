@@ -1,0 +1,18 @@
+// Place all the styles related to the Items controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+.quantity-btn {
+    background-color: black;
+    color: white;
+    width: 30px;
+    padding: 5px 8px;
+    border: none;
+    border-radius: 5px;
+    &:hover {
+        cursor: pointer;
+    }
+}
+
+.quantity-count {
+    padding: 5px 8px;
+}

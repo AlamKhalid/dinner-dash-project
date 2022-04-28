@@ -1,0 +1,3 @@
+class CategoryItem < ApplicationRecord
+
+end

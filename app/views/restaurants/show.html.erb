@@ -1,18 +1,19 @@
-<div>
-  <div class="row">
-    <div class="col-4 left-panel">
-      <span>Name etc</span>
-    </div>
-    <div class="col-8">
-      <ul>
-        <li>1...</li>
-        <li>1...</li>
-        <li>1...</li>
-        <li>1...</li>
-        <li>1...</li>
-        <li>1...</li>
-        <li>1...</li>
-      </ul>
-    </div>
+<% unless flash.now[:notice].nil?%>
+  <div class="alert alert-success" role="alert">
+    <%= flash.now[:notice] %>
   </div>
+<% end %>
+<h1 class="text-center mb-3"><%= @restaurant.name %></h1>
+<div class="d-flex justify-content-end mb-4 align-items-center">
+  <span>Browse items by category | popularity</span>
+  <select class="form-control ml-2 w-15">
+    <option>All</option>
+    <option>Popular</option>
+    <%= @categories.each do |c| %>
+      <option value=<%= c.id %>><%= c.name %></option>
+    <% end %>
+  </select>
 </div>
+<div class="row">
+  <%= render @restaurant.items%>
+<div>
