@@ -4,16 +4,16 @@
   </div>
 <% end %>
 <h1 class="text-center mb-3"><%= @restaurant.name %></h1>
-<div class="d-flex justify-content-end mb-4 align-items-center">
-  <span>Browse items by category | popularity</span>
-  <select class="form-control ml-2 w-15">
-    <option>All</option>
-    <option>Popular</option>
-    <%= @categories.each do |c| %>
-      <option value=<%= c.id %>><%= c.name %></option>
-    <% end %>
-  </select>
-</div>
-<div class="row">
+  <%= form_with url: restaurant_path, method: 'put', class: "d-flex justify-content-end mb-4 align-items-center" do |f| %>
+    <span>Browse items by category | popularity</span>
+    <%
+      categories_array = Category.order(:name).map { |c| [c.name] }
+      categories_array.unshift(['Popular', 'popular'])
+      categories_array.unshift(['All', 'all'])
+    %>
+    <%= select_tag :category_name, options_for_select(categories_array), class: "form-control ml-2 w-15" %>
+    <%= f.submit 'Search', class: "ml-2 btn btn-dark"%>
+  <% end %>
+<div class="row" id="restaurant-items">
   <%= render @restaurant.items%>
 <div>
