@@ -50,7 +50,7 @@ ActiveRecord::Schema.define(version: 2022_04_23_113822) do
   create_table "cart_orders", force: :cascade do |t|
     t.bigint "user_id"
     t.integer "status"
-    t.decimal "total_price", precision: 5, scale: 2, default: "0.0"
+    t.decimal "total_price", default: "0.0"
     t.string "type"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -73,7 +73,7 @@ ActiveRecord::Schema.define(version: 2022_04_23_113822) do
   create_table "items", force: :cascade do |t|
     t.string "name"
     t.string "description"
-    t.decimal "price", precision: 5, scale: 2
+    t.decimal "price"
     t.boolean "retired", default: false
     t.bigint "restaurant_id"
     t.datetime "created_at", null: false

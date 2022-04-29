@@ -13,6 +13,10 @@ class CartItemsController < ApplicationController
     end
     @cart_item.save
     @cart.save
+
+    respond_to do |format|
+      format.js
+    end
   end
 
   def destroy

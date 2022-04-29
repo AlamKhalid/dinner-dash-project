@@ -3,7 +3,7 @@ class CreateItems < ActiveRecord::Migration[5.2]
     create_table :items do |t|
       t.string :name
       t.string :description
-      t.decimal :price, precision: 5, scale: 2
+      t.decimal :price
       t.boolean :retired, default: false
       t.references :restaurant, foreign_key: true
 

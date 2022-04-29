@@ -21,18 +21,4 @@ $(document).on('click', '.cart-item-inc', function() {
     qty++;
     qtyElem.html(qty);
     $('quantity-' + qtyElemId).val(qty);
-    $.ajax({
-        type: "PUT",
-        contentType: "application/json; charset=utf-8",
-        url: "/cart_items/update",
-        data: JSON.stringify({ id: qtyElemId }),
-        dataType: "json",
-        success: function(result) {
-            //do somthing here
-            console.log(success);
-        },
-        error: function(e) {
-            console.log(e);
-        }
-    });
 });
