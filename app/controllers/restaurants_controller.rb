@@ -11,6 +11,9 @@ class RestaurantsController < ApplicationController
       @items = @restaurant.items
     when 'popular'
       # find one with most order count
+      item_id = Item.includes(:cart_order_items).where(restaurant_id: 7).where(cart_order_items: {type: "CartItem"}).group(:id).count().max_by{|k,v| v}.first
+      @items = []
+      @items << Item.find(item_id)
     else
       @items = Item.includes(:categories).where(restaurant_id: params[:id])
                    .where(categories: { name: params[:category_name] })
