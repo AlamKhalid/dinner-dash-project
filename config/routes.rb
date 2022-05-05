@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'orders/index'
   put 'cart_items/update'
   delete 'cart_items/destroy'
   resources :carts

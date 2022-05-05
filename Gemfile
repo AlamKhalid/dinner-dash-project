@@ -12,6 +12,10 @@ gem 'pg'
 
 # Use the devise gem for Authentication
 gem 'devise'
+gem 'devise-guests'
+
+# Use pundit for Authorization
+gem 'pundit'
 
 # Use the bootstrap gem for UI
 gem 'bootstrap', '~> 4.0.0'

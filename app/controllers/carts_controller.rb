@@ -1,17 +1,19 @@
 class CartsController < ApplicationController
 
   def index
-    @cart = Cart.includes(:cart_order_items, :items).find_by(user_id: current_user.id)
+    @cart = Cart.includes(:cart_order_items, :items).find_by(user_id: current_or_guest_user.id)
   end
 
   def update
   end
 
   def create
-    @cart = Cart.find_by(user_id: current_user.id)
+    @flash_msg = 'Item added to cart successfully'
+    @class_alert = 'alert-success'
+    @cart = Cart.find_by(user_id: current_or_guest_user.id)
     if @cart.nil?
       @cart = Cart.new
-      @cart.user_id = current_user.id
+      @cart.user_id = current_or_guest_user.id
       @cart.restaurant_id = params[:restaurant_id]
       @cart.total_price += params[:quantity].to_i * Item.find(params[:item_id]).price
       @cart.save
@@ -31,12 +33,12 @@ class CartsController < ApplicationController
       end
       @cart.save
     else
-      flash.now[:notice] = 'Item from different restaurant already exists in cart'
+      @flash_msg = 'Item from different restaurant already exists in cart'
+      @class_alert = 'alert-danger'
     end
     respond_to do |format|
       format.js
     end
-    # flash.now[:notice] = 'Item added to cart successfully'
   end
 
   def destroy
