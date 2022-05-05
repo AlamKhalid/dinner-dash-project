@@ -20,6 +20,7 @@
       <li class="list-group-item text-center">
       <%= form_with url: carts_path, method: 'post' do |f| %>
         <%= f.hidden_field :item_id, value: item.id %>
+        <%= f.hidden_field :restaurant_id, value: item.restaurant_id %>
         <%= f.hidden_field :quantity, value: 1, id: "quantity-#{item.id}" %>
         <%= f.submit "Add to cart", class: "btn btn-dark" %>
         <% end %>

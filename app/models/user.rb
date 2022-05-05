@@ -9,8 +9,9 @@ class User < ApplicationRecord
   validates :display_name, length: { in: 2..32 }, unless: ->(user) { user.display_name.length.zero? }
 
   enum role: {
-    user: 0,
-    admin: 1
+    normal: 0,
+    admin: 1,
+    guest: 2
   }, _prefix: true
 
   has_one :cart

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_04_23_113822) do
+ActiveRecord::Schema.define(version: 2022_04_30_083217) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -54,6 +54,8 @@ ActiveRecord::Schema.define(version: 2022_04_23_113822) do
     t.string "type"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "restaurant_id"
+    t.index ["restaurant_id"], name: "index_cart_orders_on_restaurant_id"
     t.index ["user_id"], name: "index_cart_orders_on_user_id"
   end
 
@@ -108,6 +110,7 @@ ActiveRecord::Schema.define(version: 2022_04_23_113822) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "cart_order_items", "cart_orders"
   add_foreign_key "cart_order_items", "items"
+  add_foreign_key "cart_orders", "restaurants"
   add_foreign_key "cart_orders", "users"
   add_foreign_key "items", "restaurants"
 end
