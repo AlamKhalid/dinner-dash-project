@@ -5,4 +5,13 @@ class RestaurantPolicy < ApplicationPolicy
     #   scope.all
     # end
   end
+
+  def new?
+    user.role_admin?
+  end
+
+  def edit?
+    user.role_admin?
+  end
+
 end

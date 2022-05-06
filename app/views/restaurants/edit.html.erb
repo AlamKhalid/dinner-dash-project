@@ -1,0 +1,44 @@
+<h1 class="text-center">Edit Restaurant - <%= @restaurant.name %></h1>
+<%= form_with model: @restaurant do |f| %>
+  <div class="row">
+    <div class="col-md-6 mb-3">
+      <%= f.label :name %>
+      <%= f.text_field :name, class: "form-control" %>
+    </div>
+    <div class="col-md-6 mb-3">
+      <%= f.label :location %>
+      <%= f.text_field :location, class: "form-control" %>
+    </div>
+    <div class="col-md-6 mb-3">
+      <%= f.submit 'Update', class: 'btn btn-warning'%>
+    </div>
+  </div>
+<% end %>
+<h3 class="my-4 text-center">Restaurant Items</h3>
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col">Name</th>
+      <th scope="col">Category</th>
+      <th scope="col">Price</th>
+      <th scope="col">Retired</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @restaurant.items.each do |item| %>
+      <tr>
+        <th scope="row"><%= item.id %></th>
+        <td><%= item.name %></td>
+        <td><%= item.categories.pluck(:name).join(', ') %></td>
+        <td><%= item.price %></td>
+        <td><%= item.retired ? 'Yes' : 'No' %></td>
+        <td><%= link_to edit_restaurant_item_path(@restaurant, item) do %>
+          <%= fa_icon "pencil", class: "text-warning" %>
+        <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

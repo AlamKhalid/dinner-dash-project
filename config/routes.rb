@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   resources :orders, except: %i[new destroy]
   resources :restaurants do
     resources :items
+    put 'category_filter'
   end
   devise_for :users
   root 'restaurants#index'
