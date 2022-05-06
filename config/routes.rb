@@ -1,8 +1,10 @@
 Rails.application.routes.draw do
+  get 'admins/index'
   put 'cart_items/update'
   delete 'cart_items/destroy'
+  resources :category, only: %i[create new edit update]
   resources :carts, only: %i[index create destroy]
-  resources :orders, except: %i[new edit destroy]
+  resources :orders, except: %i[new destroy]
   resources :restaurants do
     resources :items
   end
