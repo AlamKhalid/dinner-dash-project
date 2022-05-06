@@ -1,8 +1,8 @@
 Rails.application.routes.draw do
   put 'cart_items/update'
   delete 'cart_items/destroy'
-  resources :carts
-  resources :orders
+  resources :carts, only: %i[index create destroy]
+  resources :orders, except: %i[new edit destroy]
   resources :restaurants do
     resources :items
   end

@@ -4,9 +4,6 @@ class CartsController < ApplicationController
     @cart = Cart.includes(:cart_order_items, :items).find_by(user_id: current_or_guest_user.id)
   end
 
-  def update
-  end
-
   def create
     @flash_msg = 'Item added to cart successfully'
     @class_alert = 'alert-success'
