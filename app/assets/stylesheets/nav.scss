@@ -1,0 +1,44 @@
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    background-color: black;
+    color: white;
+    padding: 20px 30px;
+    margin-bottom: 20px;
+    .logo {
+        font-size: large;
+        color: white;
+    }
+    .cart-icon {
+        font-size: x-large;
+        margin-left: 10px;
+    }
+    .dropdown-link {
+        background-color: transparent;
+        color: white;
+        border: none;
+    }
+    .user-icon {
+        margin-right: 5px;
+    }
+    .dropdown-link:focus {
+        border: none;
+        outline: none;
+    }
+    .dropdown-item {
+        i {
+            margin-right: 5px;
+        }
+    }
+    .dropdown-item-link {
+        text-decoration: none;
+        color: black;
+    }
+    .dropdown-item:active {
+        background-color: black;
+        border: none;
+        .dropdown-item-link {
+            color: white;
+        }
+    }
+}

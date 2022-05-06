@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Project</title>
+    <title>DinnerDash</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
@@ -10,6 +10,9 @@
   </head>
 
   <body>
+  <%= render 'common/nav'%>
+  <div class="container">
     <%= yield %>
+  </div>
   </body>
 </html>

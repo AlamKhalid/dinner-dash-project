@@ -1,0 +1,11 @@
+// Place all the styles related to the Restaurants controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+.left-panel {
+    position: sticky;
+    background-color: white;
+    border: 1px solid gray;
+    border-radius: 10px;
+    height: 80vh;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
