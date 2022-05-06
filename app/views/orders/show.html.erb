@@ -20,7 +20,7 @@
         <td><%= coi.item.name %></td>
         <td><%= coi.quantity %></td>
         <td>Rs. <%= coi.quantity.to_i * coi.item.price %></td>
-        <td><%= link_to 'View Item', restaurant_item_path(coi.item), class: 'btn btn-dark'%></td>
+        <td><%= link_to 'View Item', restaurant_item_path(coi.item.restaurant, coi.item), class: 'btn btn-dark'%></td>
       </tr>
     <% end %>
     <tr class="table-secondary">
