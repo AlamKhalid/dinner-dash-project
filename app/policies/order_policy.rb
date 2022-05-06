@@ -7,7 +7,15 @@ class OrderPolicy < ApplicationPolicy
   end
 
   def index?
-    @current_user
+    user
+  end
+
+  def create?
+    user
+  end
+
+  def show?
+    Order.find(params[:id]).user_id == user.id
   end
 
 end
