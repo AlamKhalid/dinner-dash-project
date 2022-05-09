@@ -5,4 +5,29 @@ class ItemPolicy < ApplicationPolicy
     #   scope.all
     # end
   end
+
+  def admin_role?
+    user.role_admin?
+  end
+
+  def new?
+    admin_role?
+  end
+
+  def edit?
+    admin_role?
+  end
+
+  def update?
+    admin_role?
+  end
+
+  def create?
+    admin_role?
+  end
+
+  def destroy?
+    admin_role?
+  end
+
 end

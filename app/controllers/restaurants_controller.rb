@@ -21,9 +21,11 @@ class RestaurantsController < ApplicationController
   end
 
   def edit
+    authorize @restaurant
   end
 
   def update
+    authorize @restaurant
     if @restaurant.update(restaurant_params)
       flash.now[:notice] = 'Updated Restaurant successfully'
     else
@@ -70,7 +72,6 @@ class RestaurantsController < ApplicationController
 
   def find_restaurant
     @restaurant = Restaurant.find(params[:id])
-    authorize @restaurant
   end
 
   def new_restaurant_authorize
