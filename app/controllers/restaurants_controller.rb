@@ -61,7 +61,7 @@ class RestaurantsController < ApplicationController
 
   def destroy
     @restaurant.destroy
-    redirect_to '/admins/index'
+    redirect_to admins_index_path
   end
 
   private

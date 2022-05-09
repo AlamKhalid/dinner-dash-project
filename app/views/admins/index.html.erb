@@ -1,8 +1,10 @@
 <h1 class="text-center mb-5">Admin Dashboard</h1>
+<%# Restaurants %>
 <h3 class="text-center mb-3">Restaurants</h3>
 <%= link_to new_restaurant_path do %>
   <button class="btn btn-info mb-3"><%= fa_icon 'plus'%> Add New Restaurant</button>
 <% end %>
+
 <table class="table table-hover">
   <thead>
     <tr>
@@ -32,3 +34,38 @@
     <% end %>
   </tbody>
 </table>
+<%# Categories %>
+<h3 class="text-center mt-5 mb-3">Categories</h3>
+<%= link_to new_category_path do %>
+  <button class="btn btn-info mb-3"><%= fa_icon 'plus'%> Add New Category</button>
+<% end %>
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col">Name</th>
+      <th scope="col">Item Count</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @categories.each do |category|%>
+      <tr>
+        <th scope="row"><%= category.id %></th>
+        <td><%= category.name %></td>
+        <td><%= category.items.count %></td>
+
+        <td><%= link_to edit_category_path(category) do%>
+          <%= fa_icon "pencil", class: "text-warning" %>
+        <% end %>
+        <%= link_to category, method: :delete, data: {confirm: "Are you sure?"} do%>
+          <%= fa_icon "trash", class: "ml-3 text-danger" %>
+        <% end %>
+        </td>
+
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<%# Orders %>
+<h3 class="text-center mt-5 mb-3">Orders</h3>
