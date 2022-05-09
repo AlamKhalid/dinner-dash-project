@@ -1,20 +1,9 @@
-<h1 class="text-center">Edit Restaurant - <%= @restaurant.name %></h1>
-<%= form_with model: @restaurant do |f| %>
-  <div class="row">
-    <div class="col-md-6 mb-3">
-      <%= f.label :name %>
-      <%= f.text_field :name, class: "form-control" %>
-    </div>
-    <div class="col-md-6 mb-3">
-      <%= f.label :location %>
-      <%= f.text_field :location, class: "form-control" %>
-    </div>
-    <div class="col-md-6 mb-3">
-      <%= f.submit 'Update', class: 'btn btn-warning'%>
-    </div>
-  </div>
-<% end %>
+<h1 class="text-center" id="heading-restaurant">Edit Restaurant - <%= @restaurant.name %></h1>
+<%= render 'form' %>
 <h3 class="my-4 text-center">Restaurant Items</h3>
+<%= link_to new_restaurant_item_path(@restaurant) do %>
+  <button class="btn btn-info mb-3"><%= fa_icon 'plus'%> Add New Item</button>
+<% end %>
 <table class="table table-hover">
   <thead>
     <tr>

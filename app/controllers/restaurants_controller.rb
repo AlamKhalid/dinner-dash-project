@@ -1,5 +1,6 @@
 class RestaurantsController < ApplicationController
-  before_action :find_restaurant, only: %i[update show edit]
+  before_action :find_restaurant, only: %i[update show edit destroy]
+  before_action :new_restaurant_authorize, only: %i[new create]
 
   def index
     @restaurants = Restaurant.all
@@ -8,7 +9,29 @@ class RestaurantsController < ApplicationController
   def new
   end
 
+  def create
+    @restaurant = Restaurant.create(restaurant_params)
+    if @restaurant
+      flash[:notice] = 'Created Restaurant successfully'
+      redirect_to '/admins/index'
+    else
+      flash.now[:alert] = 'An error occured'
+      render :new
+    end
+  end
+
   def edit
+  end
+
+  def update
+    if @restaurant.update(restaurant_params)
+      flash.now[:notice] = 'Updated Restaurant successfully'
+    else
+      flash.now[:alert] = 'An error occured'
+    end
+    respond_to do |format|
+      format.js
+    end
   end
 
   def category_filter
@@ -34,9 +57,24 @@ class RestaurantsController < ApplicationController
   def show
   end
 
+  def destroy
+    @restaurant.destroy
+    redirect_to '/admins/index'
+  end
+
   private
+
+  def restaurant_params
+    params.require(:restaurant).permit(:name, :location)
+  end
 
   def find_restaurant
     @restaurant = Restaurant.find(params[:id])
+    authorize @restaurant
+  end
+
+  def new_restaurant_authorize
+    @restaurant = Restaurant.new
+    authorize @restaurant
   end
 end
