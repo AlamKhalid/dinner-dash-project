@@ -1,4 +1,6 @@
 class OrdersController < ApplicationController
+  before_action :find_order, only: %i[show edit]
+
   def index
     @orders = Order.includes(:restaurant, :cart_order_items).order(created_at: :desc)
     authorize @orders
@@ -13,7 +15,15 @@ class OrdersController < ApplicationController
     redirect_to orders_path
   end
 
+  def edit
+  end
+
   def show
+  end
+
+  private
+
+  def find_order
     @order = Order.includes(:restaurant, :cart_order_items).find(params[:id])
   end
 

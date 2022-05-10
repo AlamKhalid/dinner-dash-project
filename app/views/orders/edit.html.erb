@@ -1,0 +1,19 @@
+<h1 class="text-center">Edit Order</h1>
+<h6><strong>Order ID:</strong> <%= @order.id %></h6>
+<h6><strong>Customer Name:</strong> <%= @order.user.name %></h6>
+<h6><strong>Order ID:</strong> <%= @order.id %></h6>
+<h6><strong>Order ID:</strong> <%= @order.id %></h6>
+
+<%= form_with model: @order do |f| %>
+  <div class="row">
+    <div class="col-md-6 mb-3">
+    </div>
+    <div class="col-md-6 mb-3">
+    </div>
+    <div class="col-md-6 mb-3">
+      <%= f.submit 'Submit', class: 'btn btn-dark'%>
+    </div>
+  </div>
+<% end %>
+<%= render 'common/back_btn' %>
+
