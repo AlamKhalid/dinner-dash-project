@@ -1,33 +1,33 @@
-<h1 class="text-center" id="heading-restaurant">Edit Restaurant - <%= @restaurant.name %></h1>
+<h1 class='text-center' id='heading-restaurant'>Edit Restaurant - <%= @restaurant.name %></h1>
 <%= render 'form' %>
-<h3 class="my-4 text-center">Restaurant Items</h3>
+<h3 class='my-4 text-center'>Restaurant Items</h3>
 <%= link_to new_restaurant_item_path(@restaurant) do %>
-  <button class="btn btn-info mb-3"><%= fa_icon 'plus'%> Add New Item</button>
+  <button class='btn btn-info mb-3'><%= fa_icon 'plus'%> Add New Item</button>
 <% end %>
-<table class="table table-hover">
+<table class='table table-hover'>
   <thead>
     <tr>
-      <th scope="col">ID</th>
-      <th scope="col">Name</th>
-      <th scope="col">Category</th>
-      <th scope="col">Price</th>
-      <th scope="col">Retired</th>
+      <th scope='col'>ID</th>
+      <th scope='col'>Name</th>
+      <th scope='col'>Category</th>
+      <th scope='col'>Price</th>
+      <th scope='col'>Retired</th>
       <th></th>
     </tr>
   </thead>
   <tbody>
     <% @restaurant.items.each do |item| %>
       <tr>
-        <th scope="row"><%= item.id %></th>
+        <th scope='row'><%= item.id %></th>
         <td><%= item.name %></td>
         <td><%= item.categories.pluck(:name).join(', ') %></td>
         <td><%= item.price %></td>
         <td><%= item.retired ? 'Yes' : 'No' %></td>
         <td><%= link_to edit_restaurant_item_path(@restaurant, item) do %>
-          <%= fa_icon "pencil", class: "text-warning" %>
+          <%= fa_icon 'pencil', class: 'text-warning' %>
         <% end %>
-        <%= link_to restaurant_item_path(@restaurant, item), method: :delete, data: {confirm: "Are you sure?"} do%>
-          <%= fa_icon "trash", class: "ml-3 text-danger" %>
+        <%= link_to restaurant_item_path(@restaurant, item), method: :delete, data: {confirm: 'Are you sure?'} do%>
+          <%= fa_icon 'trash', class: 'ml-3 text-danger' %>
         <% end %>
         </td>
       </tr>

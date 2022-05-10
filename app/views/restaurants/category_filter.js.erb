@@ -1,5 +1,5 @@
 <% if @items.length.zero? %>
-  $('#restaurant-items').html("No items to show")
+  $('#restaurant-items').html('No items to show')
 <% else %>
-  $('#restaurant-items').html("<%= j render @items %>")
+  $('#restaurant-items').html('<%= j render @items %>')
 <% end %>

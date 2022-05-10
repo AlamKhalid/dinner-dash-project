@@ -4,27 +4,27 @@
 <h6><strong>Customer Name:</strong> <%= @order.user.full_name %></h6>
 <h6><strong>Customer Email:</strong> <%= @order.user.email %></h6>
 <h6><strong>Restaurant:</strong> <%= @order.restaurant.name %></h6>
-<table class="mt-5 table table-hover">
+<table class='mt-5 table table-hover'>
   <thead>
     <tr>
-      <th scope="col">ID</th>
-      <th scope="col">Item</th>
-      <th scope="col">Quantity</th>
-      <th scope="col">Price</th>
+      <th scope='col'>ID</th>
+      <th scope='col'>Item</th>
+      <th scope='col'>Quantity</th>
+      <th scope='col'>Price</th>
       <th></th>
     </tr>
   </thead>
   <tbody>
     <% @order.cart_order_items.each do |coi|%>
       <tr>
-        <th scope="row"><%= coi.item.id %></th>
+        <th scope='row'><%= coi.item.id %></th>
         <td><%= coi.item.name %></td>
         <td><%= coi.quantity %></td>
         <td>Rs. <%= coi.quantity.to_i * coi.item.price %></td>
         <td><%= link_to 'View Item', restaurant_item_path(coi.item.restaurant, coi.item), class: 'btn btn-dark'%></td>
       </tr>
     <% end %>
-    <tr class="table-secondary">
+    <tr class='table-secondary'>
       <td></td>
       <td></td>
       <th>Total Price: </th>
