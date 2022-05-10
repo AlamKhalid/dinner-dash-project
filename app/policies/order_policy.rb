@@ -15,7 +15,7 @@ class OrderPolicy < ApplicationPolicy
   end
 
   def show?
-    Order.find(params[:id]).user_id == user.id
+    Order.find(params[:id]).user_id == user.id || user.role_admin?
   end
 
 end

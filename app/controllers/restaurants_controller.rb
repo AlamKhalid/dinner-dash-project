@@ -13,7 +13,7 @@ class RestaurantsController < ApplicationController
     @restaurant = Restaurant.create(restaurant_params)
     if @restaurant
       flash[:notice] = 'Created Restaurant successfully'
-      redirect_to '/admins/index'
+      redirect_to admins_index_path
     else
       flash.now[:alert] = 'An error occured'
       render :new

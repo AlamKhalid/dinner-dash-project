@@ -1,0 +1,5 @@
+<% if @orders.length.positive? %>
+  $('#orders-table-body-admin').html('<%= j render @orders %>');
+<% else %>
+  $('#orders-table-body-admin').html('No orders to show');
+<% end %>
