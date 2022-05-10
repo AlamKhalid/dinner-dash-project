@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class RestaurantsController < ApplicationController
   before_action :find_restaurant, only: %i[update show edit destroy]
   before_action :new_restaurant_authorize, only: %i[new create]
@@ -6,8 +8,7 @@ class RestaurantsController < ApplicationController
     @restaurants = Restaurant.all
   end
 
-  def new
-  end
+  def new; end
 
   def create
     @restaurant = Restaurant.create(restaurant_params)
@@ -56,8 +57,7 @@ class RestaurantsController < ApplicationController
     end
   end
 
-  def show
-  end
+  def show; end
 
   def destroy
     @restaurant.destroy

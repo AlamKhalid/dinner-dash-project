@@ -18,6 +18,10 @@ class OrderPolicy < ApplicationPolicy
     user.role_admin?
   end
 
+  def update?
+    user.role_admin?
+  end
+
   def show?
     Order.find(params[:id]).user_id == user.id || user.role_admin?
   end

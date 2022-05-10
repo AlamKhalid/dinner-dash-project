@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CartItemsController < ApplicationController
   before_action :find_cart_item_and_cart, only: %i[update destroy]
 
@@ -5,11 +7,9 @@ class CartItemsController < ApplicationController
     return if params[:quantity] == @cart_item.quantity
 
     if params[:commit] == '+'
-      @cart_item.quantity += 1
-      @cart.total_price += @cart_item.item.price
+      adding_cart_action
     elsif @cart_item.quantity != 1
-      @cart_item.quantity -= 1
-      @cart.total_price -= @cart_item.item.price
+      removing_cart_action
     end
     @cart_item.save
     @cart.save
@@ -35,5 +35,15 @@ class CartItemsController < ApplicationController
   def find_cart_item_and_cart
     @cart_item = CartItem.find(params[:id])
     @cart = @cart_item.cart_order
+  end
+
+  def adding_cart_action
+    @cart_item.quantity += 1
+    @cart.total_price += @cart_item.item.price
+  end
+
+  def removing_cart_action
+    @cart_item.quantity -= 1
+    @cart.total_price -= @cart_item.item.price
   end
 end

@@ -1,17 +1,16 @@
+# frozen_string_literal: true
+
 class ItemsController < ApplicationController
   before_action :find_restaurant, only: %i[show new create destroy edit]
-  before_action :find_item, only: %i[show edit]
+  before_action :find_item, only: %i[show edit destroy]
 
-  def show
-
-  end
+  def show; end
 
   def new
     @item = Item.new
   end
 
-  def edit
-  end
+  def edit; end
 
   def create
     @item = @restaurant.items.create(item_params)
@@ -28,11 +27,7 @@ class ItemsController < ApplicationController
   end
 
   def destroy
-    if Item.find(params[:id]).destroy
-      @flash_msg = 'Item deleted successfully'
-    else
-      @flash_msg = 'An error occured'
-    end
+    @item.destroy ? flash[:notice] = 'Item deleted successfully' : flash[:else] = 'An error occured'
     redirect_to edit_restaurant_path(@restaurant)
   end
 
@@ -49,5 +44,4 @@ class ItemsController < ApplicationController
   def find_item
     @item = Item.includes(:restaurant).find(params[:id])
   end
-
 end
