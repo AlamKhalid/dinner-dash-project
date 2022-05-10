@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class CategoriesController < ApplicationController
+  before_action :authorize_admin
   before_action :find_category, only: %i[edit update destroy]
 
   def new
@@ -42,6 +43,10 @@ class CategoriesController < ApplicationController
 
   def category_params
     params.require(:category).permit(:name)
+  end
+
+  def authorize_admin
+    authorize :category, :admin_role
   end
 
   def find_category

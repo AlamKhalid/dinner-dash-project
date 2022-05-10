@@ -9,6 +9,6 @@ class AdminPolicy < ApplicationPolicy
   end
 
   def index?
-    user.role_admin?
+    user&.role_admin?
   end
 end

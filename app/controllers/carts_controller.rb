@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class CartsController < ApplicationController
+
   def index
     @cart = Cart.includes(:cart_order_items, :items).find_by(user_id: current_or_guest_user.id)
   end
@@ -23,7 +24,9 @@ class CartsController < ApplicationController
   end
 
   def destroy
-    Cart.find(params[:id]).destroy
+    @cart = Cart.find(params[:id])
+    authorize @cart
+    @cart.destroy ? flash[:notice] = 'Cart deleted successfully' : flash[:alert] = 'An error occured'
     redirect_to carts_path
   end
 

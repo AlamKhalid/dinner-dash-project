@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class AdminsController < ApplicationController
+  before_action :authorize_admin, only: %i[index status_filter]
+
   def index
     authorize :admin, :index?
     @restaurants = Restaurant.includes(:items).order(:id).all
@@ -19,5 +21,11 @@ class AdminsController < ApplicationController
     respond_to do |format|
       format.js
     end
+  end
+
+  private
+
+  def authorize_admin
+    authorize :admin, :index?
   end
 end

@@ -2,6 +2,7 @@
 
 class CartItemsController < ApplicationController
   before_action :find_cart_item_and_cart, only: %i[update destroy]
+  before_action :authorize_user, only: %i[update destroy]
 
   def update
     return if params[:quantity] == @cart_item.quantity
@@ -31,6 +32,10 @@ class CartItemsController < ApplicationController
   end
 
   private
+
+  def authorize_user
+    authorize @cart_item
+  end
 
   def find_cart_item_and_cart
     @cart_item = CartItem.find(params[:id])
