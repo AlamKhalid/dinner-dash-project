@@ -38,7 +38,7 @@ User.create(full_name: 'Josh Cheek', email: 'demo+josh@jumpstartlab.com', passwo
 # Item.destroy_all
 # Rancher Items
 # item-1
-i = Item.create!(name: 'Krunch Burger',
+i = Item.new(name: 'Krunch Burger',
                  description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry.
                           Lorem Ipsum has been the industry's standard dummy text ever since the 1500s",
                  price: 200.0,
@@ -46,8 +46,9 @@ i = Item.create!(name: 'Krunch Burger',
 i.item_picture.attach(io: File.open('./app/assets/images/ranchers/krunch.png'), filename: 'krunch-ranchers.png')
 i.categories << all_categories[0]
 i.categories << all_categories[4]
+i.save
 # item-2
-i = Item.create(name: 'Frizza',
+i = Item.new(name: 'Frizza',
                 description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry.
                             Lorem Ipsum has been the industry's standard dummy text ever since the 1500s",
                 price: 300.0,
@@ -55,8 +56,9 @@ i = Item.create(name: 'Frizza',
 i.item_picture.attach(io: File.open('./app/assets/images/ranchers/frizza.png'), filename: 'frizza-ranchers.png')
 i.categories << all_categories[0]
 i.categories << all_categories[3]
+i.save
 # item-3
-i = Item.create(name: 'Rodeo',
+i = Item.new(name: 'Rodeo',
                 description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry.
              Lorem Ipsum has been the industry's standard dummy text ever since the 1500s",
                 price: 600.0,
@@ -64,8 +66,9 @@ i = Item.create(name: 'Rodeo',
 i.item_picture.attach(io: File.open('./app/assets/images/ranchers/rodeo.png'), filename: 'rodeo-ranchers.png')
 i.categories << all_categories[2]
 i.categories << all_categories[1]
+i.save
 # item-4
-i = Item.create(name: 'Bronco',
+i = Item.new(name: 'Bronco',
                 description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry.
              Lorem Ipsum has been the industry's standard dummy text ever since the 1500s",
                 price: 600.0,
@@ -73,8 +76,9 @@ i = Item.create(name: 'Bronco',
 i.item_picture.attach(io: File.open('./app/assets/images/ranchers/bronco.png'), filename: 'bronco-ranchers.png')
 i.categories << all_categories[4]
 i.categories << all_categories[5]
+i.save
 # item-5
-i = Item.create(name: 'Big Ben',
+i = Item.new(name: 'Big Ben',
                 description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry.
              Lorem Ipsum has been the industry's standard dummy text ever since the 1500s",
                 price: 600.0,
@@ -82,8 +86,9 @@ i = Item.create(name: 'Big Ben',
 i.item_picture.attach(io: File.open('./app/assets/images/ranchers/big_ben.png'), filename: 'big-ben-ranchers.png')
 i.categories << all_categories[1]
 i.categories << all_categories[3]
+i.save
 # item-6
-i = Item.create(name: 'Pablito',
+i = Item.new(name: 'Pablito',
                 description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry.
              Lorem Ipsum has been the industry's standard dummy text ever since the 1500s",
                 price: 500.0,
@@ -91,8 +96,9 @@ i = Item.create(name: 'Pablito',
 i.item_picture.attach(io: File.open('./app/assets/images/ranchers/pablito.png'), filename: 'pablito-ranchers.png')
 i.categories << all_categories[1]
 i.categories << all_categories[2]
+i.save
 # item-7
-i = Item.create(name: 'Fajita',
+i = Item.new(name: 'Fajita',
                 description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry.
              Lorem Ipsum has been the industry's standard dummy text ever since the 1500s",
                 price: 600.0,
@@ -100,10 +106,11 @@ i = Item.create(name: 'Fajita',
 i.item_picture.attach(io: File.open('./app/assets/images/ranchers/fajita.png'), filename: 'fajita-ranchers.png')
 i.categories << all_categories[2]
 i.categories << all_categories[5]
+i.save
 
 # KFC Items
 # item-1
-i = Item.create!(name: 'Zinger Burger',
+i = Item.new(name: 'Zinger Burger',
                  description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry.
            Lorem Ipsum has been the industry's standard dummy text ever since the 1500s",
                  price: 210.0,
@@ -111,8 +118,9 @@ i = Item.create!(name: 'Zinger Burger',
 i.item_picture.attach(io: File.open('./app/assets/images/kfc/zinger.png'), filename: 'krunch-kfc.png')
 i.categories << all_categories[0]
 i.categories << all_categories[5]
+i.save
 # item-2
-i = Item.create!(name: 'Mighty Zinger',
+i = Item.new(name: 'Mighty Zinger',
                  description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry.
            Lorem Ipsum has been the industry's standard dummy text ever since the 1500s",
                  price: 610.0,
@@ -120,8 +128,9 @@ i = Item.create!(name: 'Mighty Zinger',
 i.item_picture.attach(io: File.open('./app/assets/images/kfc/mighty_zinger.png'), filename: 'mighty-zinger-kfc.png')
 i.categories << all_categories[5]
 i.categories << all_categories[3]
+i.save
 # item-3
-i = Item.create!(name: 'Zinger Stacker',
+i = Item.new(name: 'Zinger Stacker',
                  description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry.
            Lorem Ipsum has been the industry's standard dummy text ever since the 1500s",
                  price: 510.0,
@@ -129,8 +138,9 @@ i = Item.create!(name: 'Zinger Stacker',
 i.item_picture.attach(io: File.open('./app/assets/images/kfc/zinger_stacker.png'), filename: 'zinger-stacker-kfc.png')
 i.categories << all_categories[0]
 i.categories << all_categories[2]
+i.save
 # item-4
-i = Item.create!(name: 'Twister',
+i = Item.new(name: 'Twister',
                  description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry.
            Lorem Ipsum has been the industry's standard dummy text ever since the 1500s",
                  price: 310.0,
@@ -138,8 +148,9 @@ i = Item.create!(name: 'Twister',
 i.item_picture.attach(io: File.open('./app/assets/images/kfc/twister.png'), filename: 'twister-kfc.png')
 i.categories << all_categories[0]
 i.categories << all_categories[1]
+i.save
 # item-5
-i = Item.create!(name: 'Fries',
+i = Item.new(name: 'Fries',
                  description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry.
            Lorem Ipsum has been the industry's standard dummy text ever since the 1500s",
                  price: 210.0,
@@ -147,19 +158,21 @@ i = Item.create!(name: 'Fries',
 i.item_picture.attach(io: File.open('./app/assets/images/kfc/fries.png'), filename: 'fries-kfc.png')
 i.categories << all_categories[1]
 i.categories << all_categories[2]
+i.save
 # item-6
-i = Item.create!(name: 'Nuggets',
+i = Item.new(name: 'Nuggets',
                  description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-           Lorem Ipsum has been the industry's standard dummy text ever since the 1500s",
+                  Lorem Ipsum has been the industry's standard dummy text ever since the 1500s",
                  price: 250.0,
                  restaurant_id: kfc.id)
 i.item_picture.attach(io: File.open('./app/assets/images/kfc/nuggets.jpeg'), filename: 'nuggets-kfc.jpeg')
 i.categories << all_categories[2]
 i.categories << all_categories[4]
+i.save
 
 # Pizza Hut Items
 # item-1
-i = Item.create!(name: 'Chicken Tikka',
+i = Item.new(name: 'Chicken Tikka',
                  description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry.
            Lorem Ipsum has been the industry's standard dummy text ever since the 1500s",
                  price: 299.0,
@@ -167,8 +180,10 @@ i = Item.create!(name: 'Chicken Tikka',
 i.item_picture.attach(io: File.open('./app/assets/images/pizza_hut/tikka.jpeg'), filename: 'tikka-pizza-hut.jpeg')
 i.categories << all_categories[0]
 i.categories << all_categories[4]
+i.save
+
 # item-2
-i = Item.create!(name: 'Chicken Fajita',
+i = Item.new(name: 'Chicken Fajita',
                  description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry.
            Lorem Ipsum has been the industry's standard dummy text ever since the 1500s",
                  price: 299.0,
@@ -176,8 +191,9 @@ i = Item.create!(name: 'Chicken Fajita',
 i.item_picture.attach(io: File.open('./app/assets/images/pizza_hut/fajita.jpeg'), filename: 'fajita-pizza-hut.jpeg')
 i.categories << all_categories[0]
 i.categories << all_categories[2]
+i.save
 # item-3
-i = Item.create!(name: 'Veggie',
+i = Item.new(name: 'Veggie',
                  description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry.
            Lorem Ipsum has been the industry's standard dummy text ever since the 1500s",
                  price: 299.0,
@@ -185,9 +201,10 @@ i = Item.create!(name: 'Veggie',
 i.item_picture.attach(io: File.open('./app/assets/images/pizza_hut/veggie.jpeg'), filename: 'veggie-pizza-hut.jpeg')
 i.categories << all_categories[0]
 i.categories << all_categories[2]
+i.save
 
 # item-4
-i = Item.create!(name: 'Margherita Pizza',
+i = Item.new(name: 'Margherita Pizza',
                  description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry.
            Lorem Ipsum has been the industry's standard dummy text ever since the 1500s",
                  price: 299.0,
@@ -196,8 +213,9 @@ i.item_picture.attach(io: File.open('./app/assets/images/pizza_hut/margherita.jp
                       filename: 'margherita-pizza-hut.jpeg')
 i.categories << all_categories[5]
 i.categories << all_categories[4]
+i.save
 # item-5
-i = Item.create!(name: 'Creamy Melt',
+i = Item.new(name: 'Creamy Melt',
                  description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry.
            Lorem Ipsum has been the industry's standard dummy text ever since the 1500s",
                  price: 299.0,
@@ -206,8 +224,9 @@ i.item_picture.attach(io: File.open('./app/assets/images/pizza_hut/creamy_melt.j
                       filename: 'creamy-melt-pizza-hut.jpeg')
 i.categories << all_categories[3]
 i.categories << all_categories[1]
+i.save
 # item-6
-i = Item.create!(name: 'Garlic Bread',
+i = Item.new(name: 'Garlic Bread',
                  description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry.
            Lorem Ipsum has been the industry's standard dummy text ever since the 1500s",
                  price: 199.0,
@@ -216,8 +235,9 @@ i.item_picture.attach(io: File.open('./app/assets/images/pizza_hut/garlic_bread.
                       filename: 'garlic-bread-pizza-hut.jpeg')
 i.categories << all_categories[0]
 i.categories << all_categories[4]
+i.save
 # item-7
-i = Item.create!(name: 'Brownie',
+i = Item.new(name: 'Brownie',
                  description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry.
            Lorem Ipsum has been the industry's standard dummy text ever since the 1500s",
                  price: 199.0,
@@ -225,3 +245,4 @@ i = Item.create!(name: 'Brownie',
 i.item_picture.attach(io: File.open('./app/assets/images/pizza_hut/brownie.jpeg'), filename: 'brownie-pizza-hut.jpeg')
 i.categories << all_categories[2]
 i.categories << all_categories[1]
+i.save

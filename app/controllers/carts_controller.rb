@@ -30,13 +30,17 @@ class CartsController < ApplicationController
   private
 
   def create_new_cart
+    cart_creation
+    @cart.save
+    # create cart item
+    @cart_item = CartItem.create(cart_order_id: @cart.id, item_id: params[:item_id], quantity: params[:quantity])
+  end
+
+  def cart_creation
     @cart = Cart.new
     @cart.user_id = current_or_guest_user.id
     @cart.restaurant_id = params[:restaurant_id]
     @cart.total_price += params[:quantity].to_i * Item.find(params[:item_id]).price
-    @cart.save
-    # create cart item
-    @cart_item = CartItem.create(cart_order_id: @cart.id, item_id: params[:item_id], quantity: params[:quantity])
   end
 
   def create_or_update_cart_item

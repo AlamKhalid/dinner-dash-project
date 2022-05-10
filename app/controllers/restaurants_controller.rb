@@ -44,13 +44,9 @@ class RestaurantsController < ApplicationController
       @items = @restaurant.items
     when 'popular'
       # find one with most order count
-      item_id = Item.includes(:cart_order_items).where(restaurant_id: params[:restaurant_id]).where(cart_order_items:
-                { type: 'OrderItem' }).group(:id).count.max_by { |_k, v| v }.first
-      @items = []
-      @items << Item.find(item_id)
+      popular_items
     else
-      @items = Item.includes(:categories).where(restaurant_id: params[:restaurant_id])
-                   .where(categories: { name: params[:category_name] })
+      @items = Item.restaurant_items(params[:restaurant_id]).filter_category(params[:category_name])
     end
     respond_to do |format|
       format.js
@@ -68,6 +64,12 @@ class RestaurantsController < ApplicationController
 
   def restaurant_params
     params.require(:restaurant).permit(:name, :location)
+  end
+
+  def popular_items
+    item_id = Item.restaurant_items(params[:restaurant_id]).order_items.group(:id).count.max_by { |_k, v| v }.first
+    @items = []
+    @items << Item.find(item_id)
   end
 
   def find_restaurant
