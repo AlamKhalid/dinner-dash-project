@@ -9,7 +9,13 @@ class AdminsController < ApplicationController
   end
 
   def status_filter
-    @orders = Order.includes(:user, :restaurant).order(:id).where(status: params[:status]).all
+    @orders = if params[:status] == '-1'
+                Order.includes(:user,
+                               :restaurant).order(:id).all
+              else
+                Order.includes(:user,
+                               :restaurant).order(:id).where(status: params[:status]).all
+              end
     respond_to do |format|
       format.js
     end

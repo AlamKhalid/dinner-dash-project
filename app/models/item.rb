@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Item < ApplicationRecord
   belongs_to :restaurant
   has_and_belongs_to_many :categories
@@ -8,5 +10,5 @@ class Item < ApplicationRecord
   validates :name, :description, :price, presence: true
   validates :name, uniqueness: true
   validates :price, presence: true, format: { with: /\A\d+(?:\.\d{0,2})?\z/ },
-            numericality: { greater_than: 0, less_than: 1000000 }
+                    numericality: { greater_than: 0, less_than: 1_000_000 }
 end

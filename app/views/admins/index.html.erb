@@ -78,6 +78,7 @@
     <span>Browse order by status</span>
     <%
       statuses_array = Order.statuses.to_a.map{|o| [o[0].titleize,o[1]]}
+      statuses_array.unshift(['All', -1])
     %>
     <%= select_tag :status, options_for_select(statuses_array), class: 'form-control ml-2 w-15' %>
     <%= f.submit 'Search', class: 'ml-2 btn btn-dark'%>

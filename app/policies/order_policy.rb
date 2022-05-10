@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class OrderPolicy < ApplicationPolicy
   class Scope < Scope
     # NOTE: Be explicit about which records you allow access to!
@@ -25,5 +27,4 @@ class OrderPolicy < ApplicationPolicy
   def show?
     Order.find(params[:id]).user_id == user.id || user.role_admin?
   end
-
 end

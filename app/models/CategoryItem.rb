@@ -1,3 +1,4 @@
-class CategoryItem < ApplicationRecord
+# frozen_string_literal: true
 
+class CategoryItem < ApplicationRecord
 end

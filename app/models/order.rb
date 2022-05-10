@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Order < CartOrder
   validates :user_id, presence: true
 
@@ -7,5 +9,4 @@ class Order < CartOrder
     cancelled: 2,
     completed: 3
   }, _prefix: true
-
 end
