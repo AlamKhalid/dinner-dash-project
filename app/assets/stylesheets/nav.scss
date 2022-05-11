@@ -9,9 +9,18 @@
         font-size: large;
         color: white;
     }
+    .cart-filled-div {
+        position: relative;
+    }
+    .cart-badge {
+        position: absolute;
+        right: -10px;
+        top: -10px;
+    }
     .cart-icon {
         font-size: x-large;
         margin-left: 10px;
+        color: white;
     }
     .dropdown-link {
         background-color: transparent;

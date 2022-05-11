@@ -1,0 +1,2 @@
+class CartItem < CartOrderItem
+end

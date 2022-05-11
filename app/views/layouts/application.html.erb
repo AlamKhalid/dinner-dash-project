@@ -4,15 +4,21 @@
     <title>DinnerDash</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
-
   <body>
-  <%= render 'common/nav'%>
-  <div class="container">
-    <%= yield %>
-  </div>
+    <%= render 'common/nav'%>
+    <div class="container">
+      <% flash.each do |type, msg| %>
+        <div class="alert alert-info alert-dismissible fade show">
+          <%= msg %>
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+      <% end %>
+      <%= yield %>
+    </div>
   </body>
 </html>

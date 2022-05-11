@@ -1,0 +1,30 @@
+<div class="col-md-4 .offset-md-1 mb-4">
+  <div class="card">
+    <%= image_tag item.item_picture, height: 300 %>
+    <div class="card-body">
+      <h5 class="card-title"><%= item.name %></h5>
+      <p class="card-text"><%= item.description %></p>
+    </div>
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item d-flex justify-content-between">
+        <div>
+          <span>Price:</span>
+          <strong>Rs. <%= item.price %></strong>
+        </div>
+        <div>
+          <button class="quantity-btn dec-btn" data-item-id="<%= item.id %>">-</button>
+          <span class="quantity-count">1</span>
+          <button class="quantity-btn inc-btn" data-item-id="<%= item.id %>">+</button>
+        </div>
+      </li>
+      <li class="list-group-item text-center">
+      <%= form_with url: carts_path, method: 'post' do |f| %>
+        <%= f.hidden_field :item_id, value: item.id %>
+        <%= f.hidden_field :restaurant_id, value: item.restaurant_id %>
+        <%= f.hidden_field :quantity, value: 1, id: "quantity-#{item.id}" %>
+        <%= f.submit "Add to cart", class: "btn btn-dark" %>
+        <% end %>
+      </li>
+    </ul>
+  </div>
+</div>

@@ -1,0 +1,48 @@
+<h1 class="text-center mb-3">Cart</h1>
+<% if @cart.nil? %>
+  <h6 class="text-center">Cart is empty. Start filling up your basket.</h6>
+<% else %>
+  <table class="table table-hover">
+    <caption>Total items in cart: <%= @cart.items.count %></caption>
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Item Name</th>
+        <th scope="col">Quantity</th>
+        <th scope="col">Price</th>
+        <th scope="col" class="text-center">Change Quantity</th>
+        <th scope="col" class="text-center">Remove from Cart</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @cart.cart_order_items.each_with_index do |cart_item, idx|%>
+        <tr>
+          <th scope="row"><%= idx + 1 %></th>
+          <td><%= cart_item.item.name %></td>
+          <td id="quantity-cart-<%= cart_item.id %>"><%= cart_item.quantity %></td>
+          <td>Rs. <%= cart_item.item.price %></td>
+          <td class="text-center">
+               <%= form_with url: cart_items_update_path(id: cart_item), method: 'put' do |f| %>
+                <%= f.hidden_field :quantity, value: cart_item.quantity, id: "quantity-#{cart_item.id}" %>
+                <%= f.submit "-",class: "quantity-btn mr-2 cart-item-dec", "data-cart-item-id": cart_item.id %>
+                <%= f.submit "+",class: "quantity-btn cart-item-inc", "data-cart-item-id": cart_item.id %>
+              <% end %>
+          </td>
+          <td class="text-center">
+            <%= link_to(raw(fa_icon "trash", class: "text-danger cart-delete-icon"), cart_items_destroy_path(id: cart_item.id), method: 'delete')%>
+          </td>
+        </tr>
+      <% end %>
+      <tr class="table-secondary">
+        <td></td>
+        <td></td>
+        <td class="font-weight-bold">Total Price</td>
+        <td id="total-price-cart">Rs. <%= @cart.total_price %></td>
+        <td></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <%= link_to "Checkout", orders_path, method: 'post', class: "btn btn-dark" %>
+  <%= link_to "Clear Cart", @cart, method: 'delete', data: {confirm: "Are you sure?"}, class: "btn btn-danger" %>
+<% end %>
