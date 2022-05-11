@@ -9,6 +9,9 @@
         <h5 class='card-title'><%= @item.name %></h5>
         <p class='card-text'><%= @item.description %></p>
         <p class='card-text'><small class='text-muted'>Price: Rs. <%= @item.price %></small></p>
+        <% if @item.retired %>
+        <p><strong>Item is retired. Cannot be added to cart</strong></p>
+        <% end %>
       </div>
     </div>
   </div>

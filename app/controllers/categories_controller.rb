@@ -47,7 +47,7 @@ class CategoriesController < ApplicationController
   end
 
   def authorize_admin
-    authorize :category, :admin_role
+    authorize :category, :admin_role?
   end
 
   def find_category

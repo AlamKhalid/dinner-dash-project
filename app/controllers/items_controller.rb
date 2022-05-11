@@ -2,8 +2,8 @@
 
 # Controller for items
 class ItemsController < ApplicationController
-  before_action :find_restaurant, only: %i[show new create destroy edit]
-  before_action :find_item, only: %i[show edit destroy]
+  before_action :find_restaurant, only: %i[show new create destroy edit update]
+  before_action :find_item, only: %i[show edit destroy update]
   before_action :authorize_admin, only: %i[new edit create update destroy]
 
   def show; end
@@ -13,6 +13,16 @@ class ItemsController < ApplicationController
   end
 
   def edit; end
+
+  def update
+    if @item.update(item_params)
+      flash[:notice] = 'Item updated successfully'
+      redirect_to edit_restaurant_path(@restaurant)
+    else
+      flash.now[:alert] = 'An error occured'
+      render 'edit'
+    end
+  end
 
   def create
     @item = @restaurant.items.new(item_params)
@@ -42,7 +52,7 @@ class ItemsController < ApplicationController
   end
 
   def authorize_admin
-    authorize :item, :admin_role
+    authorize :item, :admin_role?
   end
 
   def find_restaurant
