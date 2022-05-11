@@ -7,9 +7,11 @@ class CartsController < ApplicationController
   end
 
   def create
+    return if Item.find(params[:item_id]).retired
+
     success_flash
     @cart = Cart.find_by(user_id: current_or_guest_user.id)
-    cart_creat_action
+    cart_create_action
     respond_to do |format|
       format.js
     end
@@ -24,7 +26,7 @@ class CartsController < ApplicationController
 
   private
 
-  def cart_creat_action
+  def cart_create_action
     if @cart.nil?
       create_new_cart
     elsif @cart.restaurant_id == params[:restaurant_id].to_i
@@ -46,9 +48,9 @@ class CartsController < ApplicationController
 
   def create_new_cart
     cart_creation
-    @cart.save
     # create cart item
     @cart_item = CartItem.create(cart_order_id: @cart.id, item_id: params[:item_id], quantity: params[:quantity])
+    @cart.save
   end
 
   def cart_creation

@@ -4,7 +4,6 @@
 class RestaurantsController < ApplicationController
   before_action :authorize_admin, only: %i[new edit create update destroy]
   before_action :find_restaurant, only: %i[update show edit destroy]
-  before_action :new_restaurant_authorize, only: %i[new create]
 
   def index
     @restaurants = Restaurant.all
@@ -83,10 +82,5 @@ class RestaurantsController < ApplicationController
 
   def find_restaurant
     @restaurant = Restaurant.find(params[:id])
-  end
-
-  def new_restaurant_authorize
-    @restaurant = Restaurant.new
-    authorize @restaurant
   end
 end

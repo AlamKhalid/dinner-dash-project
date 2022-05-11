@@ -46,3 +46,4 @@
   <%= link_to 'Checkout', orders_path, method: 'post', class: 'btn btn-dark' %>
   <%= link_to 'Clear Cart', @cart, method: 'delete', data: {confirm: 'Are you sure?'}, class: 'btn btn-danger' %>
 <% end %>
+<%= render 'common/back_btn' %>
