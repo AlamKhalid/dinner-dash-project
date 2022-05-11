@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Controller for cart item
 class CartItemsController < ApplicationController
   before_action :find_cart_item_and_cart, only: %i[update destroy]
   before_action :authorize_user, only: %i[update destroy]
@@ -12,8 +13,7 @@ class CartItemsController < ApplicationController
     elsif @cart_item.quantity != 1
       removing_cart_action
     end
-    @cart_item.save
-    @cart.save
+    save_cart_and_cart_item
 
     respond_to do |format|
       format.js
@@ -22,12 +22,7 @@ class CartItemsController < ApplicationController
 
   def destroy
     if @cart_item.destroy
-      if CartItem.exists?(cart_order_id: @cart.id)
-        @cart.total_price -= @cart_item.item.price * @cart_item.quantity
-        @cart.save
-      else
-        @cart.destroy
-      end
+      check_exisiting_cart
       flash[:notice] = 'Cart item deleted successfully'
     else
       flash[:alert] = 'An error occured'
@@ -36,6 +31,20 @@ class CartItemsController < ApplicationController
   end
 
   private
+
+  def check_exisiting_cart
+    if CartItem.exists?(cart_order_id: @cart.id)
+      @cart.total_price -= @cart_item.item.price * @cart_item.quantity
+      @cart.save
+    else
+      @cart.destroy
+    end
+  end
+
+  def save_cart_and_cart_item
+    @cart_item.save
+    @cart.save
+  end
 
   def authorize_user
     authorize @cart_item

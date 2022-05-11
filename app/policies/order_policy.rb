@@ -1,13 +1,7 @@
 # frozen_string_literal: true
 
+# Pundit policy for orders
 class OrderPolicy < ApplicationPolicy
-  class Scope < Scope
-    # NOTE: Be explicit about which records you allow access to!
-    # def resolve
-    #   scope.all
-    # end
-  end
-
   attr_reader :user, :order
 
   def initialize(user, order)

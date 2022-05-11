@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Controller for orders
 class OrdersController < ApplicationController
   before_action :find_order, only: %i[show edit update]
 

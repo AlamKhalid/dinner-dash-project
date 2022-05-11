@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Controller for category
 class CategoriesController < ApplicationController
   before_action :authorize_admin
   before_action :find_category, only: %i[edit update destroy]

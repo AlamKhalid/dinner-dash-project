@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Controller for restaurants
 class RestaurantsController < ApplicationController
   before_action :find_restaurant, only: %i[update show edit destroy]
   before_action :new_restaurant_authorize, only: %i[new create]
@@ -40,15 +41,7 @@ class RestaurantsController < ApplicationController
 
   def category_filter
     @restaurant = Restaurant.find(params[:restaurant_id])
-    case params[:category_name]
-    when 'all'
-      @items = @restaurant.items
-    when 'popular'
-      # find one with most order count
-      popular_items
-    else
-      @items = Item.restaurant_items(params[:restaurant_id]).filter_category(params[:category_name])
-    end
+    category_case
     respond_to do |format|
       format.js
     end
@@ -62,6 +55,18 @@ class RestaurantsController < ApplicationController
   end
 
   private
+
+  def category_case
+    case params[:category_name]
+    when 'all'
+      @items = @restaurant.items
+    when 'popular'
+      # find one with most order count
+      popular_items
+    else
+      @items = Item.restaurant_items(params[:restaurant_id]).filter_category(params[:category_name])
+    end
+  end
 
   def authorize_admin
     authorize :restaurant, :admin_role

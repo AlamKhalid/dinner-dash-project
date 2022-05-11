@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Pundit policy for application, each policy inherits from this class
 class ApplicationPolicy
   attr_reader :user, :record
 
@@ -36,6 +37,7 @@ class ApplicationPolicy
     false
   end
 
+  # scope for defining user for all policies
   class Scope
     def initialize(user, scope)
       @user = user

@@ -1,11 +1,7 @@
-class CartItemPolicy < ApplicationPolicy
-  class Scope < Scope
-    # NOTE: Be explicit about which records you allow access to!
-    # def resolve
-    #   scope.all
-    # end
-  end
+# frozen_string_literal: true
 
+# Pundit policy for cart item
+class CartItemPolicy < ApplicationPolicy
   attr_reader :user, :cart_item
 
   def initialize(user, cart_item)

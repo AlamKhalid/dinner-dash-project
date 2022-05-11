@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Application controller, main controller from which all controller inherits
 class ApplicationController < ActionController::Base
   include Pundit::Authorization
 
