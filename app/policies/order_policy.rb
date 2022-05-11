@@ -8,6 +8,13 @@ class OrderPolicy < ApplicationPolicy
     # end
   end
 
+  attr_reader :user, :order
+
+  def initialize(user, order)
+    super
+    @order = order
+  end
+
   def index?
     user
   end
@@ -25,6 +32,9 @@ class OrderPolicy < ApplicationPolicy
   end
 
   def show?
-    Order.find(params[:id]).user_id == user.id || user.role_admin?
+    return true if user.role_normal? && order.user_id == user.id
+    return true if user.role_admin?
+
+    false
   end
 end

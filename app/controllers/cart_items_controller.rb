@@ -21,12 +21,16 @@ class CartItemsController < ApplicationController
   end
 
   def destroy
-    @cart_item.destroy
-    if CartItem.exists?(cart_order_id: @cart.id)
-      @cart.total_price -= @cart_item.item.price * @cart_item.quantity
-      @cart.save
+    if @cart_item.destroy
+      if CartItem.exists?(cart_order_id: @cart.id)
+        @cart.total_price -= @cart_item.item.price * @cart_item.quantity
+        @cart.save
+      else
+        @cart.destroy
+      end
+      flash[:notice] = 'Cart item deleted successfully'
     else
-      @cart.destroy
+      flash[:alert] = 'An error occured'
     end
     redirect_to carts_path
   end
