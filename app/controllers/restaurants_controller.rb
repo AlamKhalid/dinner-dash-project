@@ -2,8 +2,8 @@
 
 # Controller for restaurants
 class RestaurantsController < ApplicationController
-  before_action :authorize_admin, only: %i[new edit create update destroy]
-  before_action :find_restaurant, only: %i[update show edit destroy]
+  before_action :authorize_admin, only: %i[new edit create update]
+  before_action :find_restaurant, only: %i[update show edit]
 
   def index
     @restaurants = Restaurant.all
@@ -39,7 +39,7 @@ class RestaurantsController < ApplicationController
 
   def category_filter
     @restaurant = Restaurant.find(params[:restaurant_id])
-    category_case
+    filter_items_by_category
     respond_to do |format|
       format.js
     end
@@ -47,14 +47,9 @@ class RestaurantsController < ApplicationController
 
   def show; end
 
-  def destroy
-    @restaurant.destroy ? flash[:notice] = 'Restaurant deleted successfully' : 'An error occured'
-    redirect_to admins_index_path
-  end
-
   private
 
-  def category_case
+  def filter_items_by_category
     case params[:category_name]
     when 'all'
       @items = @restaurant.items

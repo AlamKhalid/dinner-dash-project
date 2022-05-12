@@ -48,9 +48,9 @@ class CartsController < ApplicationController
 
   def create_new_cart
     cart_creation
+    @cart.save
     # create cart item
     @cart_item = CartItem.create(cart_order_id: @cart.id, item_id: params[:item_id], quantity: params[:quantity])
-    @cart.save
   end
 
   def cart_creation
