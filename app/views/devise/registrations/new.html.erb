@@ -17,13 +17,10 @@ html: {class: ' d-flex flex-column align-items-center', novalidate: true}) do |f
     </div>
     <div class='col-md-6 mb-3'>
       <%= f.label :password %>
-      <%# <% if @minimum_password_length %>
-      <%# <em>(<%= @minimum_password_length characters minimum)</em> %>
-      <%# <% end %><br />
       <%= f.password_field :password, autocomplete: 'new-password', class: 'form-control' %>
     </div>
     <div class='col-md-6 mb-3'>
-      <%= f.label :password_confirmation, 'Confirm Password' %><br />
+      <%= f.label :password_confirmation %><br />
       <%= f.password_field :password_confirmation, autocomplete: 'new-password', class: 'form-control'  %>
     </div>
     <div class='col-md-6 mb-3'>

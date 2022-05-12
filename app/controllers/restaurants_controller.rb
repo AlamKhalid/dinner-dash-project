@@ -47,7 +47,9 @@ class RestaurantsController < ApplicationController
     end
   end
 
-  def show; end
+  def show
+    @items = @restaurant.items.where(retired: false)
+  end
 
   private
 

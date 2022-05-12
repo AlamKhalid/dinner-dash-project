@@ -19,6 +19,8 @@ class CartsController < ApplicationController
 
   def destroy
     @cart = Cart.find(params[:id])
+    return if @cart.user_id != current_or_guest_user.id
+
     @cart.destroy ? flash[:notice] = 'Cart deleted successfully' : flash[:alert] = 'An error occured'
     redirect_to carts_path
   end
@@ -28,7 +30,7 @@ class CartsController < ApplicationController
   def cart_create_action
     if @cart.nil?
       create_new_cart
-    elsif @cart.restaurant_id == params[:restaurant_id].to_i
+    elsif @cart.restaurant_id == params[:restaurant_id].to_i && cart.user_id == current_or_guest_user.id
       create_or_update_cart_item
     else
       error_flash
