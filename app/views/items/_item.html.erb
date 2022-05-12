@@ -1,6 +1,10 @@
 <div class='col-md-4 .offset-md-1 mb-4'>
   <div class='card'>
-    <%= image_tag item.item_picture, height: 300 %>
+    <% if item.item_picture.attached? %>
+      <%= image_tag item.item_picture, height: 300 %>
+    <% else %>
+     <%= image_tag 'stock_img.jpeg', height: 300 %>
+    <% end %>
     <div class='card-body'>
       <h5 class='card-title'><%= item.name %></h5>
       <p class='card-text'><%= item.description %></p>
