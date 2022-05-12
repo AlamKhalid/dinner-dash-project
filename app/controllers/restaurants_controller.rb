@@ -49,7 +49,7 @@ class RestaurantsController < ApplicationController
 
   private
 
-  def filtered_items_by_category
+  def filter_items_by_category
     case params[:category_name]
     when 'all'
       @items = @restaurant.items
