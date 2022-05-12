@@ -19,7 +19,6 @@ class CartsController < ApplicationController
 
   def destroy
     @cart = Cart.find(params[:id])
-    authorize @cart
     @cart.destroy ? flash[:notice] = 'Cart deleted successfully' : flash[:alert] = 'An error occured'
     redirect_to carts_path
   end
