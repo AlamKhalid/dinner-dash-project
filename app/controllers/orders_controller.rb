@@ -5,7 +5,7 @@ class OrdersController < ApplicationController
   before_action :find_order, only: %i[show edit update]
 
   def index
-    @orders = Order.includes(:restaurant, :cart_order_items).order(created_at: :desc)
+    @orders = Order.includes(:restaurant, :cart_order_items).order(created_at: :desc).where(user_id: current_user.id)
     authorize @orders
   end
 
