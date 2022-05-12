@@ -39,7 +39,7 @@ class RestaurantsController < ApplicationController
 
   def category_filter
     @restaurant = Restaurant.find(params[:restaurant_id])
-    filtered_items_by_category
+    filter_items_by_category
     respond_to do |format|
       format.js
     end
