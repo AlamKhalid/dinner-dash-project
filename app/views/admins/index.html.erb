@@ -25,9 +25,7 @@
         <td><%= link_to edit_restaurant_path(restaurant) do%>
           <%= fa_icon 'pencil', class: 'text-warning' %>
         <% end %>
-        <%= link_to restaurant, method: :delete, data: {confirm: 'Are you sure?'} do%>
-          <%= fa_icon 'trash', class: 'ml-3 text-danger' %>
-        <% end %>
+
         </td>
 
       </tr>
@@ -54,15 +52,10 @@
         <th scope='row'><%= category.id %></th>
         <td><%= category.name %></td>
         <td><%= category.items.count %></td>
-
         <td><%= link_to edit_category_path(category) do%>
           <%= fa_icon 'pencil', class: 'text-warning' %>
         <% end %>
-        <%= link_to category, method: :delete, data: {confirm: 'Are you sure?'} do%>
-          <%= fa_icon 'trash', class: 'ml-3 text-danger' %>
-        <% end %>
         </td>
-
       </tr>
     <% end %>
   </tbody>
