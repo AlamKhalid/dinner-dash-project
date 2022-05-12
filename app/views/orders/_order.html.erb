@@ -1,0 +1,15 @@
+
+<tr>
+  <th scope='row'><%= order.id %></th>
+  <td><%= order.user.full_name %></td>
+  <td><%= order.restaurant.name %></td>
+  <td>Rs. <%= order.total_price %></td>
+  <td><%= order.status.titleize %></td>
+  <td><%= link_to edit_order_path(order) do%>
+      <%= fa_icon 'pencil', class: 'text-warning' %>
+    <% end %>
+    <%= link_to order_path(order) do%>
+      <%= fa_icon 'eye', class: 'ml-2 text-dark' %>
+    <% end %>
+  </td>
+</tr>

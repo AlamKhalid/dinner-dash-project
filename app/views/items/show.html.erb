@@ -1,2 +1,19 @@
-<h1>Items#show</h1>
-<p>Find me in app/views/items/show.html.erb</p>
+<h1 class='text-center mb-5'><%= @item.name%> from <%= @item.restaurant.name%></h1>
+<div class='card mb-3'>
+  <div class='row no-gutters'>
+    <div class='col-md-4'>
+      <%= image_tag @item.item_picture, width: '100%' %>
+    </div>
+    <div class='col-md-8'>
+      <div class='card-body'>
+        <h5 class='card-title'><%= @item.name %></h5>
+        <p class='card-text'><%= @item.description %></p>
+        <p class='card-text'><small class='text-muted'>Price: Rs. <%= @item.price %></small></p>
+        <% if @item.retired %>
+        <p><strong>Item is retired. Cannot be added to cart</strong></p>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+<%= render 'common/back_btn' %>

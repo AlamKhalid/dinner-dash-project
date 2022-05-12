@@ -1,11 +1,18 @@
+# frozen_string_literal: true
+
 Rails.application.routes.draw do
-  get 'orders/index'
+  get 'admins/index'
   put 'cart_items/update'
   delete 'cart_items/destroy'
-  resources :carts
-  resources :orders
+  # resources :category, only: %i[create new edit update destroy]
+  resources :categories
+  resources :carts, only: %i[index create destroy]
+  resources :orders, except: %i[new destroy] do
+    put 'status_filter', on: :collection, to: 'admins#status_filter'
+  end
   resources :restaurants do
     resources :items
+    put 'category_filter'
   end
   devise_for :users
   root 'restaurants#index'

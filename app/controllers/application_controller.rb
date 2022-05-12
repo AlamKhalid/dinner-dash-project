@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# Application controller, main controller from which all controller inherits
 class ApplicationController < ActionController::Base
   include Pundit::Authorization
 
@@ -6,8 +9,8 @@ class ApplicationController < ActionController::Base
   private
 
   def user_not_authorized
-    flash[:alert] = "You are not authorized to perform this action."
-    redirect_back(fallback_location: root_path)
+    flash[:alert] = 'Not authorized to perform this action'
+    redirect_back(fallback_location: new_user_session_path)
   end
 
   protect_from_forgery with: :exception
@@ -16,8 +19,12 @@ class ApplicationController < ActionController::Base
   protected
 
   def configure_permitted_parameters
-    devise_parameter_sanitizer.permit(:sign_up) { |u| u.permit(:full_name, :display_name, :email, :password, :phone_no, :address)}
-    devise_parameter_sanitizer.permit(:account_update) { |u| u.permit(:full_name, :display_name, :email, :password, :phone_no, :address, :current_password)}
+    devise_parameter_sanitizer.permit(:sign_up) do |u|
+      u.permit(:full_name, :display_name, :email, :password, :phone_no, :address)
+    end
+    devise_parameter_sanitizer.permit(:account_update) do |u|
+      u.permit(:full_name, :display_name, :email, :password, :phone_no, :address, :current_password)
+    end
   end
 
   private

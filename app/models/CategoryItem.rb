@@ -1,3 +1,0 @@
-class CategoryItem < ApplicationRecord
-
-end
