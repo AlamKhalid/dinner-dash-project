@@ -9,7 +9,9 @@ class RestaurantsController < ApplicationController
     @restaurants = Restaurant.all
   end
 
-  def new; end
+  def new
+    @restaurant = Restaurant.new
+  end
 
   def create
     @restaurant = Restaurant.create(restaurant_params)
