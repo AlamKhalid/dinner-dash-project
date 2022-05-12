@@ -39,7 +39,7 @@ class RestaurantsController < ApplicationController
 
   def category_filter
     @restaurant = Restaurant.find(params[:restaurant_id])
-    category_filter_case_statement
+    filtered_items_by_category
     respond_to do |format|
       format.js
     end
@@ -49,7 +49,7 @@ class RestaurantsController < ApplicationController
 
   private
 
-  def category_filter_case_statement
+  def filtered_items_by_category
     case params[:category_name]
     when 'all'
       @items = @restaurant.items
