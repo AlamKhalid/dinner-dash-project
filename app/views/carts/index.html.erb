@@ -29,7 +29,7 @@
               <% end %>
           </td>
           <td class='text-center'>
-            <%= link_to(raw(fa_icon 'trash', class: 'text-danger cart-delete-icon'), cart_items_destroy_path(id: cart_item.id), method: 'delete')%>
+            <%= link_to(raw(fa_icon 'trash', class: 'text-danger cart-delete-icon'), cart_items_destroy_path(id: cart_item.id), method: 'delete', data: {confirm: 'Are you sure?'})%>
           </td>
         </tr>
       <% end %>

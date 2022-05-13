@@ -30,7 +30,7 @@ class CartsController < ApplicationController
   def cart_create_action
     if @cart.nil?
       create_new_cart
-    elsif @cart.restaurant_id == params[:restaurant_id].to_i && cart.user_id == current_or_guest_user.id
+    elsif @cart.restaurant_id == params[:restaurant_id].to_i && @cart.user_id == current_or_guest_user.id
       create_or_update_cart_item
     else
       error_flash
