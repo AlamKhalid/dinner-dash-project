@@ -21,7 +21,7 @@
     </div>
     <div class='col-md-6 mb-3'>
       <%= f.label :retired %>
-      <%= f.select :retired, options_for_select([['No', false],['Yes', true]]), {} ,class: 'form-control' %>
+      <%= f.select :retired, options_for_select([['No', false],['Yes', true]], @item.retired), {} ,class: 'form-control' %>
     </div>
     <div class='col-md-6 mb-3'>
       <%= f.label :categories %>
@@ -31,6 +31,9 @@
     <div class='col-md-6 mb-3'>
       <%= f.label :item_picture %>
       <%= f.file_field :item_picture, class: 'form-control' %>
+      <% if @item.item_picture.attached? %>
+       <%= image_tag @item.item_picture, width: 300, class: 'mt-3' %>
+      <% end %>
     </div>
     <div class='col-md-6 mb-3'>
       <%= f.submit 'Submit', class: 'btn btn-dark'%>

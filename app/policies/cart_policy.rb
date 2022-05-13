@@ -8,8 +8,4 @@ class CartPolicy < ApplicationPolicy
     super
     @cart = cart
   end
-
-  def destroy?
-    user.id == cart.user.id
-  end
 end

@@ -31,16 +31,8 @@ class ItemsController < ApplicationController
 
   private
 
-  def check_item_picture
-    return if @item.item_picture.attached?
-
-    @item.item_picture.attach(io: File.open('./app/assets/images/stock_img.jpeg'),
-                              filename: "stock_img_#{@item.id}.jpeg")
-  end
-
   def save_item_check
     if @item.save
-      check_item_picture
       flash[:notice] = 'Item created successfully'
       redirect_to edit_restaurant_path(@restaurant)
     else

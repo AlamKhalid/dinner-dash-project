@@ -3,10 +3,9 @@
 # Controller for cart item
 class CartItemsController < ApplicationController
   before_action :find_cart_item_and_cart, only: %i[update destroy]
-  before_action :authorize_user, only: %i[update destroy]
 
   def update
-    return if params[:quantity] == @cart_item.quantity
+    return if params[:quantity] == @cart_item.quantity || @cart.user_id != current_or_guest_user.id
 
     if params[:commit] == '+'
       adding_cart_action
@@ -21,6 +20,8 @@ class CartItemsController < ApplicationController
   end
 
   def destroy
+    return if @cart.user_id != current_or_guest_user.id
+
     if @cart_item.destroy
       check_exisiting_cart
       flash[:notice] = 'Cart item deleted successfully'
@@ -44,10 +45,6 @@ class CartItemsController < ApplicationController
   def save_cart_and_cart_item
     @cart_item.save
     @cart.save
-  end
-
-  def authorize_user
-    authorize @cart_item
   end
 
   def find_cart_item_and_cart

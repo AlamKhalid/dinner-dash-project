@@ -1,4 +1,5 @@
 <h1 class='text-center'>Orders</h1>
+<% if @orders.length.positive? %>
 <table class='mt-5 table table-hover'>
   <thead>
     <tr>
@@ -25,4 +26,7 @@
     <% end %>
   </tbody>
 </table>
+<% else %>
+<h6>No orders to show.</h6>
+<% end %>
 <%= render 'common/back_btn' %>

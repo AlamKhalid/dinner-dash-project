@@ -1,6 +1,10 @@
 <div class='col-md-4 .offset-md-1 mb-4'>
   <div class='card'>
-    <%= image_tag item.item_picture, height: 300 %>
+    <% if item.item_picture.attached? %>
+      <%= image_tag item.item_picture, height: 300 %>
+    <% else %>
+     <%= image_tag 'stock_img.jpeg', height: 300 %>
+    <% end %>
     <div class='card-body'>
       <h5 class='card-title'><%= item.name %></h5>
       <p class='card-text'><%= item.description %></p>
@@ -25,7 +29,7 @@
           <%= form_with url: carts_path, method: 'post' do |f| %>
             <%= f.hidden_field :item_id, value: item.id %>
             <%= f.hidden_field :restaurant_id, value: item.restaurant_id %>
-            <%= f.hidden_field :quantity, value: 1, id: 'quantity-#{item.id}' %>
+            <%= f.hidden_field :quantity, value: 1, id: "quantity-#{item.id}" %>
             <%= f.submit 'Add to cart', class: 'btn btn-dark' %>
           <% end %>
         <% end %>
