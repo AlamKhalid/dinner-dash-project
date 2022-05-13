@@ -43,7 +43,7 @@ i = Item.new(name: 'Krunch Burger',
                           Lorem Ipsum has been the industry's standard dummy text ever since the 1500s",
              price: 200.0,
              restaurant_id: ranchers.id)
-i.item_picture.attach(io: URI.open('https://rancherscafe.com/wp-content/uploads/2022/01/Crunch.png'), filename: 'krunch-ranchers.png')
+i.item_picture.attach(io: File.open('./app/assets/images/ranchers/krunch.png'), filename: 'krunch-ranchers.png')
 i.categories << all_categories[0]
 i.categories << all_categories[4]
 i.save
@@ -53,7 +53,7 @@ i = Item.new(name: 'Frizza',
                             Lorem Ipsum has been the industry's standard dummy text ever since the 1500s",
              price: 300.0,
              restaurant_id: ranchers.id)
-i.item_picture.attach(io: URI.open('https://rancherscafe.com/wp-content/uploads/2022/01/FrizzaComp.png'), filename: 'frizza-ranchers.png')
+i.item_picture.attach(io: File.open('./app/assets/images/ranchers/frizza.png'), filename: 'frizza-ranchers.png')
 i.categories << all_categories[0]
 i.categories << all_categories[3]
 i.save
@@ -63,7 +63,7 @@ i = Item.new(name: 'Rodeo',
              Lorem Ipsum has been the industry's standard dummy text ever since the 1500s",
              price: 600.0,
              restaurant_id: ranchers.id)
-i.item_picture.attach(io: URI.open('https://rancherscafe.com/wp-content/uploads/2022/01/Mighty-Rodeo-Chicken.png'), filename: 'rodeo-ranchers.png')
+i.item_picture.attach(io: File.open('./app/assets/images/ranchers/rodeo.png'), filename: 'rodeo-ranchers.png')
 i.categories << all_categories[2]
 i.categories << all_categories[1]
 i.save
@@ -73,7 +73,7 @@ i = Item.new(name: 'Bronco',
              Lorem Ipsum has been the industry's standard dummy text ever since the 1500s",
              price: 600.0,
              restaurant_id: ranchers.id)
-i.item_picture.attach(io: URI.open('https://rancherscafe.com/wp-content/uploads/2022/01/bronco-chicken-burger.png'), filename: 'bronco-ranchers.png')
+i.item_picture.attach(io: File.open('./app/assets/images/ranchers/bronco.png'), filename: 'bronco-ranchers.png')
 i.categories << all_categories[4]
 i.categories << all_categories[5]
 i.save
@@ -83,7 +83,7 @@ i = Item.new(name: 'Big Ben',
              Lorem Ipsum has been the industry's standard dummy text ever since the 1500s",
              price: 600.0,
              restaurant_id: ranchers.id)
-i.item_picture.attach(io: URI.open('https://rancherscafe.com/wp-content/uploads/2022/01/Big-ben.png'), filename: 'big-ben-ranchers.png')
+i.item_picture.attach(io: File.open('./app/assets/images/ranchers/big_ben.png'), filename: 'big-ben-ranchers.png')
 i.categories << all_categories[1]
 i.categories << all_categories[3]
 i.save
@@ -93,7 +93,7 @@ i = Item.new(name: 'Pablito',
              Lorem Ipsum has been the industry's standard dummy text ever since the 1500s",
              price: 500.0,
              restaurant_id: ranchers.id)
-i.item_picture.attach(io: URI.open('https://rancherscafe.com/wp-content/uploads/2022/01/Pablito-Burger.png'), filename: 'pablito-ranchers.png')
+i.item_picture.attach(io: File.open('./app/assets/images/ranchers/pablito.png'), filename: 'pablito-ranchers.png')
 i.categories << all_categories[1]
 i.categories << all_categories[2]
 i.save
@@ -103,7 +103,7 @@ i = Item.new(name: 'Fajita',
              Lorem Ipsum has been the industry's standard dummy text ever since the 1500s",
              price: 600.0,
              restaurant_id: ranchers.id)
-i.item_picture.attach(io: URI.open('https://rancherscafe.com/wp-content/uploads/2022/01/Fajita-Burger.png'), filename: 'fajita-ranchers.png')
+i.item_picture.attach(io: File.open('./app/assets/images/ranchers/fajita.png'), filename: 'fajita-ranchers.png')
 i.categories << all_categories[2]
 i.categories << all_categories[5]
 i.save
@@ -115,7 +115,7 @@ i = Item.new(name: 'Zinger Burger',
            Lorem Ipsum has been the industry's standard dummy text ever since the 1500s",
              price: 210.0,
              restaurant_id: kfc.id)
-i.item_picture.attach(io: URI.open('https://cdn.fishry.com/product/zinger-169680a-kfc.png/xs'), filename: 'krunch-kfc.png')
+i.item_picture.attach(io: File.open('./app/assets/images/kfc/zinger.png'), filename: 'krunch-kfc.png')
 i.categories << all_categories[0]
 i.categories << all_categories[5]
 i.save
@@ -125,7 +125,7 @@ i = Item.new(name: 'Mighty Zinger',
            Lorem Ipsum has been the industry's standard dummy text ever since the 1500s",
              price: 610.0,
              restaurant_id: kfc.id)
-i.item_picture.attach(io: URI.open('https://cdn.fishry.com/product/mighty-zinger-14f6d60-kfc.png/xs'), filename: 'mighty-zinger-kfc.png')
+i.item_picture.attach(io: File.open('./app/assets/images/kfc/mighty_zinger.png'), filename: 'mighty-zinger-kfc.png')
 i.categories << all_categories[5]
 i.categories << all_categories[3]
 i.save
@@ -135,7 +135,7 @@ i = Item.new(name: 'Zinger Stacker',
            Lorem Ipsum has been the industry's standard dummy text ever since the 1500s",
              price: 510.0,
              restaurant_id: kfc.id)
-i.item_picture.attach(io: URI.open('https://cdn.fishry.com/product/zinger-stacker-22e7549-kfc.png/xs'), filename: 'zinger-stacker-kfc.png')
+i.item_picture.attach(io: File.open('./app/assets/images/kfc/zinger_stacker.png'), filename: 'zinger-stacker-kfc.png')
 i.categories << all_categories[0]
 i.categories << all_categories[2]
 i.save
@@ -145,7 +145,7 @@ i = Item.new(name: 'Twister',
            Lorem Ipsum has been the industry's standard dummy text ever since the 1500s",
              price: 310.0,
              restaurant_id: kfc.id)
-i.item_picture.attach(io: URI.open('https://cdn.fishry.com/product/twister-e65ffda-kfc.png/xs'), filename: 'twister-kfc.png')
+i.item_picture.attach(io: File.open('./app/assets/images/kfc/twister.png'), filename: 'twister-kfc.png')
 i.categories << all_categories[0]
 i.categories << all_categories[1]
 i.save
@@ -155,7 +155,7 @@ i = Item.new(name: 'Fries',
            Lorem Ipsum has been the industry's standard dummy text ever since the 1500s",
              price: 210.0,
              restaurant_id: kfc.id)
-i.item_picture.attach(io: URI.open('https://cdn.fishry.com/product/Fries-500x360-3b3497e-kfc.png/xs'), filename: 'fries-kfc.png')
+i.item_picture.attach(io: File.open('./app/assets/images/kfc/fries.png'), filename: 'fries-kfc.png')
 i.categories << all_categories[1]
 i.categories << all_categories[2]
 i.save
@@ -165,7 +165,7 @@ i = Item.new(name: 'Nuggets',
                   Lorem Ipsum has been the industry's standard dummy text ever since the 1500s",
              price: 250.0,
              restaurant_id: kfc.id)
-i.item_picture.attach(io: URI.open('https://cdn.fishry.com/product/500x360-48e9a9e-kfc.jpg/xs'), filename: 'nuggets-kfc.jpeg')
+i.item_picture.attach(io: File.open('./app/assets/images/kfc/nuggets.jpeg'), filename: 'nuggets-kfc.jpeg')
 i.categories << all_categories[2]
 i.categories << all_categories[4]
 i.save
