@@ -16,6 +16,10 @@ gem 'pg'
 gem 'devise'
 gem 'devise-guests'
 
+# cloudinary
+gem 'cloudinary', require: false
+gem 'activestorage-cloudinary-service'
+
 # Use pundit for Authorization
 gem 'pundit'
 
