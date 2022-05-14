@@ -17,8 +17,8 @@ gem 'devise'
 gem 'devise-guests'
 
 # cloudinary
-gem 'cloudinary', require: false
 gem 'activestorage-cloudinary-service'
+gem 'cloudinary'
 
 # Use pundit for Authorization
 gem 'pundit'
