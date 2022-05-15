@@ -12,9 +12,11 @@ class OrdersController < ApplicationController
   def create
     @order = Order.new
     authorize @order
-    cart = Cart.find_by(user_id: current_or_guest_user.id)
-    cart.update(type: 'Order', status: 0)
-    CartItem.where(cart_order_id: cart.id).update(type: 'OrderItem')
+    @cart = current_or_guest_user.cart
+    return if cart_has_retired_item
+
+    @cart.update(type: 'Order', status: 0)
+    CartItem.where(cart_order_id: @cart.id).update(type: 'OrderItem')
     flash[:notice] = 'Order placed successfully'
     redirect_to orders_path
   end
@@ -34,6 +36,14 @@ class OrdersController < ApplicationController
   end
 
   private
+
+  def cart_has_retired_item
+    return unless @cart.items.where(retired: true).exists?
+
+    flash[:alert] = 'Cart contains a retired item. Please clear cart and start a new one'
+    redirect_to carts_path
+    true
+  end
 
   def find_order
     @order = Order.includes(:restaurant, :cart_order_items).find(params[:id])

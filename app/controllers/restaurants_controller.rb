@@ -56,12 +56,12 @@ class RestaurantsController < ApplicationController
   def filter_items_by_category
     case params[:category_name]
     when 'all'
-      @items = @restaurant.items
+      @items = @restaurant.items.not_retired
     when 'popular'
       # find one with most order count
       popular_items
     else
-      @items = Item.restaurant_items(params[:restaurant_id]).filter_category(params[:category_name])
+      @items = Item.restaurant_items(params[:restaurant_id]).not_retired.filter_category(params[:category_name])
     end
   end
 
