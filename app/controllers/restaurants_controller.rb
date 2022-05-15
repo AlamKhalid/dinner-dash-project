@@ -14,13 +14,13 @@ class RestaurantsController < ApplicationController
   end
 
   def create
-    @restaurant = Restaurant.create(restaurant_params)
-    if @restaurant
+    @restaurant = Restaurant.new(restaurant_params)
+    if @restaurant.save
       flash[:notice] = 'Created Restaurant successfully'
       redirect_to admins_index_path
     else
       flash.now[:alert] = 'An error occured'
-      render :new
+      render 'new'
     end
   end
 

@@ -1,4 +1,11 @@
-<%= form_with model: @restaurant do |f| %>
+<%= form_with model: @restaurant, local: true do |f| %>
+<% if @restaurant.errors.any? %>
+    <ul>
+      <% @restaurant.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  <% end %>
   <div class='row'>
     <div class='col-md-6 mb-3'>
       <%= f.label :name %>
