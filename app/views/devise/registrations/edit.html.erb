@@ -42,7 +42,7 @@ class: 'd-flex flex-column align-items-center' }) do |f| %>
     </div>
     <div class='col-md-12 mb-3'>
       <%= f.label :current_password, class: 'mb-0'%> <i>(we need your current password to confirm your changes)</i><br />
-      <%= f.password_field :current_password, autocomplete: 'current-password', class: 'form-control mt-1' %>
+      <%= f.password_field :current_password, autocomplete: 'current-password', class: 'form-control mt-1', required: true %>
     </div>
     <div class='col-md-12 actions'>
       <%= f.submit 'Update', class: 'btn btn-warning' %>
