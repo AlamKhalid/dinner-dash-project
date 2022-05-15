@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Cart order item - represents both, cart item and order item
 class CreateCartOrderItems < ActiveRecord::Migration[5.2]
   def change
     create_table :cart_order_items do |t|
