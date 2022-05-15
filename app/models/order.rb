@@ -1,9 +1,6 @@
 # frozen_string_literal: true
 
 class Order < CartOrder
-  validates :user_id, presence: true
-  validates :cart_order_items, length: { minimum: 1 }
-
   enum status: {
     ordered: 0,
     paid: 1,
