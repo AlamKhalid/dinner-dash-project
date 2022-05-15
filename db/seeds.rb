@@ -32,8 +32,8 @@ u2 = User.create(full_name: 'Jeff Casimir', email: 'demo+jeff@jumpstartlab.com',
                  display_name: 'j3')
 u3 = User.create(full_name: 'Jorge Tellez', email: 'demo+jorge@jumpstartlab.com', password: 'password',
                  display_name: 'novohispano')
-u4 = User.create(full_name: 'Josh Cheek', email: 'demo+josh@jumpstartlab.com', password: 'password', display_name: 'josh',
-                 role: 1)
+u4 = User.create(full_name: 'Josh Cheek', email: 'demo+josh@jumpstartlab.com', password: 'password',
+                 display_name: 'josh', role: 1)
 
 # Item seed
 # Item.destroy_all

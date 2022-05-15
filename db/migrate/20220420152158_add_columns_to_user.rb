@@ -8,7 +8,5 @@ class AddColumnsToUser < ActiveRecord::Migration[5.2]
     add_column :users, :display_name, :string
     add_column :users, :phone_no, :string
     add_column :users, :address, :string
-
-    add_check_constraint :users, 'check_column_name IN (0, 1)', name: 'check_constraint_status'
   end
 end
