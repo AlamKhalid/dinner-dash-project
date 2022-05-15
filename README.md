@@ -1,24 +1,16 @@
-# README
+# Dinner Dash - Rails Project
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+An online ordering system for a restaurant which offers the complete functionality for restaurant customers to order food and restaurant administrators to process and complete those orders.
 
-Things you may want to cover:
+* Ruby version - 2.7
+* Rails version - 5.2
+* Postgres SQL
 
-* Ruby version
+How to run this project?
 
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+- Clone the git repository
+- Run 'bundle' at terminal
+- Also requires master.key for cloudinary configurations
+- Migrate and seed database using 'rake db:migrate' followed by 'rake db:seed'
+- Run 'rails s' at terminal to start the project
+- Go to 'localhost:3000' to view the running application
