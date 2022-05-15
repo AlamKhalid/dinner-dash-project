@@ -9,6 +9,7 @@ class User < ApplicationRecord
   validates :full_name, :email, presence: true
   validates :email, uniqueness: true
   validates :display_name, length: { in: 2..32 }, if: ->(user) { user.display_name&.length&.positive? }
+  validates :role, inclusion: 0..1
 
   enum role: {
     normal: 0,

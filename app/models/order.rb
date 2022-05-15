@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Order < CartOrder
+  validates :status, inclusion: 0..3
+
   enum status: {
     ordered: 0,
     paid: 1,
