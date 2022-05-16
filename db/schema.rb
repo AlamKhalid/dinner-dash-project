@@ -39,10 +39,10 @@ ActiveRecord::Schema.define(version: 20_220_505_130_039) do
   end
 
   create_table 'cart_order_items', force: :cascade do |t|
-    t.bigint 'cart_order_id'
-    t.bigint 'item_id'
-    t.integer 'quantity'
-    t.string 'type'
+    t.bigint 'cart_order_id', null: false
+    t.bigint 'item_id', null: false
+    t.integer 'quantity', null: false
+    t.string 'type', null: false
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
     t.index ['cart_order_id'], name: 'index_cart_order_items_on_cart_order_id'
@@ -50,19 +50,19 @@ ActiveRecord::Schema.define(version: 20_220_505_130_039) do
   end
 
   create_table 'cart_orders', force: :cascade do |t|
-    t.bigint 'user_id'
+    t.bigint 'user_id', null: false
     t.integer 'status'
     t.decimal 'total_price', default: '0.0'
-    t.string 'type'
+    t.string 'type', null: false
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
-    t.bigint 'restaurant_id'
+    t.bigint 'restaurant_id', null: false
     t.index ['restaurant_id'], name: 'index_cart_orders_on_restaurant_id'
     t.index ['user_id'], name: 'index_cart_orders_on_user_id'
   end
 
   create_table 'categories', force: :cascade do |t|
-    t.string 'name'
+    t.string 'name', null: false
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
   end
@@ -75,9 +75,9 @@ ActiveRecord::Schema.define(version: 20_220_505_130_039) do
   end
 
   create_table 'items', force: :cascade do |t|
-    t.string 'name'
-    t.string 'description'
-    t.decimal 'price'
+    t.string 'name', null: false
+    t.string 'description', null: false
+    t.decimal 'price', null: false
     t.boolean 'retired', default: false
     t.bigint 'restaurant_id'
     t.datetime 'created_at', null: false
