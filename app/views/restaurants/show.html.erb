@@ -2,12 +2,7 @@
 <h1 class='text-center mb-3'><%= @restaurant.name %></h1>
   <%= form_with url: restaurant_category_filter_path(@restaurant), method: 'put', class: 'd-flex justify-content-end mb-4 align-items-center' do |f| %>
     <span>Browse items by category | popularity</span>
-    <%
-      categories_array = Category.order(:name).map { |c| [c.name] }
-      categories_array.unshift(['Popular', 'popular'])
-      categories_array.unshift(['All', 'all'])
-    %>
-    <%= select_tag :category_name, options_for_select(categories_array), class: 'form-control ml-2 w-15' %>
+    <%= select_tag :category_name, options_for_select(category_options), class: 'form-control ml-2 w-15' %>
     <%= f.submit 'Search', class: 'ml-2 btn btn-dark'%>
   <% end %>
 <div class='row' id='restaurant-items'>
