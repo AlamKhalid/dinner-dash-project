@@ -2,7 +2,11 @@
 <div class='card mb-3'>
   <div class='row no-gutters'>
     <div class='col-md-4'>
+      <% if @item.item_picture.attached? %>
       <%= image_tag @item.item_picture, width: '100%' %>
+      <% else %>
+      <%= image_tag 'stock_img.jpeg', width: '100%' %>
+      <% end %>
     </div>
     <div class='col-md-8'>
       <div class='card-body'>

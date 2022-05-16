@@ -1,12 +1,13 @@
 # frozen_string_literal: true
 
+# Cart order item - represents both, cart item and order item
 class CreateCartOrderItems < ActiveRecord::Migration[5.2]
   def change
     create_table :cart_order_items do |t|
-      t.references :cart_order, foreign_key: true
-      t.references :item, foreign_key: true
-      t.integer :quantity
-      t.string :type
+      t.references :cart_order, foreign_key: true, null: false
+      t.references :item, foreign_key: true, null: false
+      t.integer :quantity, null: false
+      t.string :type, null: false
 
       t.timestamps
     end

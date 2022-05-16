@@ -10,11 +10,12 @@ class CategoriesController < ApplicationController
   end
 
   def create
-    if Category.create(category_params)
+    @category = Category.new(category_params)
+    if @category.save
       flash[:notice] = 'Category created successfully'
       redirect_to admins_index_path
     else
-      @flash_msg = 'An error occured'
+      flash.now[:alert] = 'An error occured'
       render 'new'
     end
   end

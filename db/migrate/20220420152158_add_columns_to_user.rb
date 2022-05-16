@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Adding custom attributes to user table created by devise
 class AddColumnsToUser < ActiveRecord::Migration[5.2]
   def change
     add_column :users, :role, :int, default: 0 # 0 means user, 1 means admin

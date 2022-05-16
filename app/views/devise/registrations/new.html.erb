@@ -5,7 +5,7 @@ html: {class: ' d-flex flex-column align-items-center', novalidate: true}) do |f
   <div class='row w-50'>
     <div class='col-md-6 mb-3'>
       <%= f.label :full_name%>
-      <%= f.text_field :full_name, autocomplete: 'fullname', autofocus: true, class: 'form-control' %>
+      <%= f.text_field :full_name, autocomplete: 'fullname', autofocus: true, class: 'form-control', required: true %>
     </div>
     <div class='col-md-6 mb-3'>
       <%= f.label :display_name%>
@@ -13,15 +13,15 @@ html: {class: ' d-flex flex-column align-items-center', novalidate: true}) do |f
     </div>
     <div class='col-md-6 mb-3'>
       <%= f.label :email%>
-      <%= f.email_field :email, autocomplete: 'email', class: 'form-control' %>
+      <%= f.email_field :email, autocomplete: 'email', class: 'form-control', required: true %>
     </div>
     <div class='col-md-6 mb-3'>
       <%= f.label :password %>
-      <%= f.password_field :password, autocomplete: 'new-password', class: 'form-control' %>
+      <%= f.password_field :password, autocomplete: 'new-password', class: 'form-control', required: true %>
     </div>
     <div class='col-md-6 mb-3'>
       <%= f.label :password_confirmation %><br />
-      <%= f.password_field :password_confirmation, autocomplete: 'new-password', class: 'form-control'  %>
+      <%= f.password_field :password_confirmation, autocomplete: 'new-password', class: 'form-control', required: true  %>
     </div>
     <div class='col-md-6 mb-3'>
       <%= f.label :phone_no %>

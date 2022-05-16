@@ -15,6 +15,6 @@ class User < ApplicationRecord
     admin: 1
   }, _prefix: true
 
-  has_one :cart, dependent: :destroy
-  has_many :orders, dependent: :destroy
+  has_one :cart
+  has_many :orders
 end

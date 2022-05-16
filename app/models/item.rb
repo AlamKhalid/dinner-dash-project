@@ -11,9 +11,10 @@ class Item < ApplicationRecord
   validates :categories, length: { minimum: 1 }
   validates :name, uniqueness: true
   validates :price, format: { with: /\A\d+(?:\.\d{0,2})?\z/ },
-                    numericality: { greater_than: 0, less_than: 1_000_000 }
+                    numericality: { greater_than: 0 }
 
   scope :restaurant_items, ->(restaurant_id) { where(restaurant_id: restaurant_id) }
+  scope :not_retired, -> { where(retired: false) }
   scope :order_items, -> { includes(:cart_order_items).where(cart_order_items: { type: 'OrderItem' }) }
   scope :filter_category, ->(category_name) { includes(:categories).where(categories: { name: category_name }) }
 end
