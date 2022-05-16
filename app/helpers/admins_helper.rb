@@ -7,7 +7,7 @@ module AdminsHelper
   end
 
   def orders_status_options
-    statuses = Order.statuses.to_a.map{ |o| [o[0].titleize, o[1]] }
+    statuses = Order.statuses.to_a.map { |o| [o[0].titleize, o[1]] }
     statuses.unshift(['All', -1])
     statuses
   end
