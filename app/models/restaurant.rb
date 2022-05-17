@@ -6,4 +6,6 @@ class Restaurant < ApplicationRecord
 
   validates :name, :location, presence: true
   validates :name, uniqueness: true
+
+  scope :restaurant_with_items, -> { includes(:items).order(:id).all }
 end

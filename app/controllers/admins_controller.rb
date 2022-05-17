@@ -6,18 +6,16 @@ class AdminsController < ApplicationController
 
   def index
     authorize :admin
-    @restaurants = Restaurant.includes(:items).order(:id).all
+    @restaurants = Restaurant.restaurant_with_items
     @categories = Category.order(:id).all
-    @orders = Order.includes(:user, :restaurant).order(:id).all
+    @orders = Order.all_orders
   end
 
   def status_filter
     @orders = if params[:status] == '-1'
-                Order.includes(:user,
-                               :restaurant).order(:id).all
+                Order.all_orders
               else
-                Order.includes(:user,
-                               :restaurant).order(:id).where(status: params[:status]).all
+                Order.with_status(params[:status])
               end
     respond_to do |format|
       format.js
