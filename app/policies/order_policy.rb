@@ -18,16 +18,16 @@ class OrderPolicy < ApplicationPolicy
   end
 
   def edit?
-    user.role_admin?
+    user&.role_admin?
   end
 
   def update?
-    user.role_admin?
+    user&.role_admin?
   end
 
   def show?
-    return true if user.role_normal? && order.user_id == user.id
-    return true if user.role_admin?
+    return true if user&.role_normal? && order.user_id == user.id
+    return true if user&.role_admin?
 
     false
   end

@@ -10,10 +10,10 @@ class CartItemPolicy < ApplicationPolicy
   end
 
   def update?
-    user.id == cart_item.cart_order.user.id
+    user&.id == cart_item.cart_order.user.id
   end
 
   def destroy?
-    user.id == cart_item.cart_order.user.id
+    user&.id == cart_item.cart_order.user.id
   end
 end
