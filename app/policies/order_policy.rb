@@ -18,11 +18,11 @@ class OrderPolicy < ApplicationPolicy
   end
 
   def edit?
-    user.role_admin?
+    user&.role_admin?
   end
 
   def update?
-    user.role_admin?
+    user&.role_admin?
   end
 
   def show?
