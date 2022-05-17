@@ -5,8 +5,8 @@ class OrdersController < ApplicationController
   before_action :find_order, only: %i[show edit update]
 
   def index
+    authorize Order
     @orders = Order.for_user(current_user.id)
-    authorize @orders
   end
 
   def create

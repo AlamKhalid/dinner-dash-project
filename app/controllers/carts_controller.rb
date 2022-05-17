@@ -80,7 +80,7 @@ class CartsController < ApplicationController
   def update_old_cart_item
     old_qty = @cart_item.quantity
     item_price = Item.find(params[:item_id]).price
-    @cart_item.quantity = params[:quantity].to_i
-    @cart.total_price += (params[:quantity].to_i * item_price) - (old_qty * item_price)
+    @cart_item.quantity = params[:quantity].to_i + old_qty
+    @cart.total_price += (params[:quantity].to_i * item_price)
   end
 end
