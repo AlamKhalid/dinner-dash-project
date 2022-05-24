@@ -20,7 +20,7 @@
         <td><%= order.cart_order_items.count %></td>
         <td>Rs. <%= order.total_price %></td>
         <td><%= order.status.titleize %></td>
-        <td><%= order.updated_at.to_time.strftime('%B %e at %l:%M %p') %></td>
+        <td><%= format_time(order.updated_at) %></td>
         <td><%= link_to 'View Details', order, class: 'btn btn-dark'%></td>
       </tr>
     <% end %>
