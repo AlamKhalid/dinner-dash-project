@@ -4,62 +4,13 @@
 <%= link_to new_restaurant_path do %>
   <button class='btn btn-info mb-3'><%= fa_icon 'plus'%> Add New Restaurant</button>
 <% end %>
-
-<table class='table table-hover'>
-  <thead>
-    <tr>
-      <th scope='col'>ID</th>
-      <th scope='col'>Name</th>
-      <th scope='col'>Location</th>
-      <th scope='col'>Total Items</th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @restaurants.each do |restaurant|%>
-      <tr>
-        <th scope='row'><%= restaurant.id %></th>
-        <td><%= restaurant.name %></td>
-        <td><%= restaurant.location %></td>
-        <td><%= restaurant.items.count %></td>
-        <td><%= link_to edit_restaurant_path(restaurant) do%>
-          <%= fa_icon 'pencil', class: 'text-warning' %>
-        <% end %>
-
-        </td>
-
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+<%= render 'restaurants/restaurant_table_admin' %>
 <%# Categories %>
 <h3 class='text-center mt-5 mb-3'>Categories</h3>
 <%= link_to new_category_path do %>
   <button class='btn btn-info mb-3'><%= fa_icon 'plus'%> Add New Category</button>
 <% end %>
-<table class='table table-hover'>
-  <thead>
-    <tr>
-      <th scope='col'>ID</th>
-      <th scope='col'>Name</th>
-      <th scope='col'>Item Count</th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @categories.each do |category|%>
-      <tr>
-        <th scope='row'><%= category.id %></th>
-        <td><%= category.name %></td>
-        <td><%= category.items.count %></td>
-        <td><%= link_to edit_category_path(category) do%>
-          <%= fa_icon 'pencil', class: 'text-warning' %>
-        <% end %>
-        </td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+<%= render 'categories/category_table_admin' %>
 <%# Orders %>
 <h3 class='text-center mt-5 mb-3'>Orders</h3>
 <h6><strong>Total number of Orders which are:</strong></h6>
@@ -68,23 +19,9 @@
 <h6>Cancelled: <em><%= orders_status_count(2) %></em></h6>
 <h6 class='mb-3'>Completed: <em><%= orders_status_count(3) %></em></h6>
 <%= form_with url: status_filter_orders_path, method: 'put', class: 'd-flex mb-4 align-items-center' do |f| %>
-    <span>Browse order by status</span>
-    <%= select_tag :status, options_for_select(orders_status_options), class: 'form-control ml-2 w-15' %>
-    <%= f.submit 'Search', class: 'ml-2 btn btn-dark'%>
-  <% end %>
-<table class='table table-hover'>
-  <thead>
-    <tr>
-      <th scope='col'>ID</th>
-      <th scope='col'>Customer Name</th>
-      <th scope='col'>Restaurant</th>
-      <th scope='col'>Total Price</th>
-      <th scope='col'>Status</th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody id='orders-table-body-admin'>
-    <%= render @orders %>
-  </tbody>
-</table>
+  <span>Browse order by status</span>
+  <%= select_tag :status, options_for_select(orders_status_options), class: 'form-control ml-2 w-15' %>
+  <%= f.submit 'Search', class: 'ml-2 btn btn-dark'%>
+<% end %>
+<%= render 'orders/order_table_admin' %>
 <%= render 'common/back_btn' %>
