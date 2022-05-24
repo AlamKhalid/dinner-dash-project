@@ -12,6 +12,7 @@ class CartsController < ApplicationController
     success_flash
     @cart = Cart.find_by(user_id: current_or_guest_user.id)
     cart_create_action
+    @item_count = @cart.cart_order_items.count
     respond_to do |format|
       format.js
     end

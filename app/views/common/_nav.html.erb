@@ -18,9 +18,9 @@
             <%= fa_icon 'sticky-note' %>
             <%= link_to 'My Orders',  orders_path, class: 'dropdown-item-link' %></button>
           <% if current_user.role_admin? %>
-             <button class='dropdown-item' type='button'>
-            <%= fa_icon 'lock' %>
-            <%= link_to 'Admin Dashboard',  admins_index_path , class: 'dropdown-item-link' %></button>
+            <button class='dropdown-item' type='button'>
+              <%= fa_icon 'lock' %>
+              <%= link_to 'Admin Dashboard',  admins_index_path , class: 'dropdown-item-link' %></button>
           <% end %>
           <div class='dropdown-divider'></div>
           <button class='dropdown-item' type='button'>
@@ -35,9 +35,7 @@
     <% end %>
     <%= link_to carts_path do%>
       <div class='cart-filled-div'>
-        <% unless current_or_guest_user.cart.nil? %>
-          <span class='cart-badge badge badge-danger'><%= current_or_guest_user&.cart&.cart_order_items&.count %></span>
-        <% end %>
+        <span class='cart-badge badge badge-danger <% show_cart_badge %>' id='cart-badge'><%= cart_item_count %></span>
         <%= fa_icon 'shopping-cart', class: 'cart-icon' %>
       </div>
     <% end %>
