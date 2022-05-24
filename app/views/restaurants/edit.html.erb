@@ -25,9 +25,8 @@
         <td><%= item.price %></td>
         <td><%= item.retired ? 'Yes' : 'No' %></td>
         <td><%= link_to edit_restaurant_item_path(@restaurant, item) do %>
-          <%= fa_icon 'pencil', class: 'text-warning' %>
-        <% end %>
-
+            <%= fa_icon 'pencil', class: 'text-warning' %>
+          <% end %>
         </td>
       </tr>
     <% end %>

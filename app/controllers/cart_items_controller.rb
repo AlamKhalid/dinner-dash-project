@@ -45,6 +45,7 @@ class CartItemsController < ApplicationController
   def save_cart_and_cart_item
     @cart_item.save
     @cart.save
+    @item_id = params[:id].to_i
   end
 
   def find_cart_item_and_cart

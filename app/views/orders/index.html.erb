@@ -1,32 +1,32 @@
 <h1 class='text-center'>Orders</h1>
 <% if @orders.length.positive? %>
-<table class='mt-5 table table-hover'>
-  <thead>
-    <tr>
-      <th scope='col'>ID</th>
-      <th scope='col'>Restaurant</th>
-      <th scope='col'>Items Count</th>
-      <th scope='col'>Total Price</th>
-      <th scope='col'>Status</th>
-      <th scope='col'>Last Modified</th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @orders.each do |order|%>
+  <table class='mt-5 table table-hover'>
+    <thead>
       <tr>
-        <th scope='row'><%= order.id %></th>
-        <td><%= order.restaurant.name %></td>
-        <td><%= order.cart_order_items.count %></td>
-        <td>Rs. <%= order.total_price %></td>
-        <td><%= order.status.titleize %></td>
-        <td><%= format_time(order.updated_at) %></td>
-        <td><%= link_to 'View Details', order, class: 'btn btn-dark'%></td>
+        <th scope='col'>ID</th>
+        <th scope='col'>Restaurant</th>
+        <th scope='col'>Items Count</th>
+        <th scope='col'>Total Price</th>
+        <th scope='col'>Status</th>
+        <th scope='col'>Last Modified</th>
+        <th></th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+    </thead>
+    <tbody>
+      <% @orders.each do |order|%>
+        <tr>
+          <th scope='row'><%= order.id %></th>
+          <td><%= order.restaurant.name %></td>
+          <td><%= order.cart_order_items.count %></td>
+          <td>Rs. <%= order.total_price %></td>
+          <td><%= order.status.titleize %></td>
+          <td><%= format_time(order.updated_at) %></td>
+          <td><%= link_to 'View Details', order, class: 'btn btn-dark'%></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
 <% else %>
-<h6>No orders to show.</h6>
+  <h6>No orders to show.</h6>
 <% end %>
 <%= render 'common/back_btn' %>

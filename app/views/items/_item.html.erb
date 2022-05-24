@@ -3,7 +3,7 @@
     <% if item.item_picture.attached? %>
       <%= image_tag item.item_picture, height: 300 %>
     <% else %>
-     <%= image_tag 'stock_img.jpeg', height: 300 %>
+      <%= image_tag 'stock_img.jpeg', height: 300 %>
     <% end %>
     <div class='card-body'>
       <h5 class='card-title'><%= item.name %></h5>

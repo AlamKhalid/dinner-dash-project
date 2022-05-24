@@ -16,11 +16,9 @@
         <td><%= restaurant.location %></td>
         <td><%= restaurant.items.count %></td>
         <td><%= link_to edit_restaurant_path(restaurant) do%>
-          <%= fa_icon 'pencil', class: 'text-warning' %>
-        <% end %>
-
+            <%= fa_icon 'pencil', class: 'text-warning' %>
+          <% end %>
         </td>
-
       </tr>
     <% end %>
   </tbody>
