@@ -50,10 +50,10 @@ class ItemsController < ApplicationController
   end
 
   def find_restaurant
-    @restaurant = Restaurant.find(params[:restaurant_id])
+    @restaurant = Restaurant.find_by(id: params[:restaurant_id]) or not_found
   end
 
   def find_item
-    @item = Item.includes(:restaurant).find(params[:id])
+    @item = Item.includes(:restaurant).find_by(id: params[:id]) or not_found
   end
 end

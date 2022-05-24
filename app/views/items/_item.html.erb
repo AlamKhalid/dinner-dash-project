@@ -17,9 +17,9 @@
           <strong>Rs. <%= item.price %></strong>
         </div>
         <div>
-          <button class='quantity-btn dec-btn' data-item-id='<%= item.id %>'>-</button>
-          <span class='quantity-count'>1</span>
-          <button class='quantity-btn inc-btn' data-item-id='<%= item.id %>'>+</button>
+          <button class='btn quantity-btn dec-btn' data-item-id='<%= item.id %>' id='dec-btn-item-<%= item.id %>' disabled>-</button>
+          <span class='quantity-count' id='quantity-item-<%= item.id %>'>1</span>
+          <button class='btn quantity-btn inc-btn' data-item-id='<%= item.id %>'>+</button>
         </div>
       </li>
       <li class='list-group-item text-center'>

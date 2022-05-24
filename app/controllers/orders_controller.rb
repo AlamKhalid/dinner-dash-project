@@ -46,7 +46,7 @@ class OrdersController < ApplicationController
   end
 
   def find_order
-    @order = Order.includes(:restaurant, :cart_order_items).find(params[:id])
+    @order = Order.includes(:restaurant, :cart_order_items).find_by(id: params[:id]) or not_found
     authorize @order
   end
 end

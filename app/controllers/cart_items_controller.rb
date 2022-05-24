@@ -48,7 +48,7 @@ class CartItemsController < ApplicationController
   end
 
   def find_cart_item_and_cart
-    @cart_item = CartItem.find(params[:id])
+    @cart_item = CartItem.find_by(id: params[:id]) or not_found
     @cart = @cart_item.cart_order
   end
 

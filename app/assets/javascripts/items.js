@@ -12,6 +12,8 @@ $(document).on('click', '.cart-item-dec', function() {
         qtyElem.html(qty);
         $('quantity-' + qtyElemId).val(qty);
     }
+    if (qty == 1)
+        $(this).prop('disabled', true);
 });
 
 $(document).on('click', '.cart-item-inc', function() {

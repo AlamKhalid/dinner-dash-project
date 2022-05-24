@@ -4,17 +4,9 @@
 class ApplicationController < ActionController::Base
   include Pundit::Authorization
 
-  rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
-
-  private
-
-  def user_not_authorized
-    flash[:alert] = 'Not authorized to perform this action'
-    redirect_back(fallback_location: new_user_session_path)
-  end
-
   protect_from_forgery with: :exception
   before_action :configure_permitted_parameters, if: :devise_controller?
+  rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
   protected
 
@@ -29,6 +21,15 @@ class ApplicationController < ActionController::Base
   end
 
   private
+
+  def not_found
+    render file: Rails.root.join('public/404.html'), layout: false, status: :not_found
+  end
+
+  def user_not_authorized
+    flash[:alert] = 'Not authorized to perform this action'
+    redirect_back(fallback_location: new_user_session_path)
+  end
 
   def transfer_guest_to_user
     # At this point you have access to:
