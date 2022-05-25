@@ -1,6 +1,6 @@
 $('#total-price-cart').html('Rs. <%= @cart.total_price %>')
 <% if @cart_item.quantity == 1 %>
-  $('#dec-btn-cart-item-<%= @item_id %>').addClass("disabled")
+  $('#dec-btn-cart-item-<%= @item_id %>').prop("disabled", true)
 <% else %>
-  $('#dec-btn-cart-item-<%= @item_id %>').removeClass("disabled")
+  $('#dec-btn-cart-item-<%= @item_id %>').prop("disabled", false)
 <% end %>
