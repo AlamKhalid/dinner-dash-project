@@ -2,6 +2,8 @@
 
 # Controller for cart
 class CartsController < ApplicationController
+  before_action :find_cart, only: %i[destroy]
+
   def index
     @cart = Cart.includes(:cart_order_items, :items).find_by(user_id: current_or_guest_user.id)
   end
@@ -19,7 +21,6 @@ class CartsController < ApplicationController
   end
 
   def destroy
-    @cart = Cart.find_by(params[:id])
     return if @cart.nil? || @cart.user_id != current_or_guest_user.id
 
     @cart.destroy ? flash[:notice] = 'Cart deleted successfully' : flash[:alert] = 'An error occured'
@@ -83,5 +84,9 @@ class CartsController < ApplicationController
     item_price = Item.find_by(id: params[:item_id])&.price
     @cart_item.quantity = params[:quantity].to_i + old_qty
     @cart.total_price += (params[:quantity].to_i * item_price)
+  end
+
+  def find_cart
+    @cart = Cart.find_by(params[:id])
   end
 end

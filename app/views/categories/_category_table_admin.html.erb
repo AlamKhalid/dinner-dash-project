@@ -8,16 +8,6 @@
     </tr>
   </thead>
   <tbody>
-    <% @categories.each do |category|%>
-      <tr>
-        <th scope='row'><%= category.id %></th>
-        <td><%= category.name %></td>
-        <td><%= category.items.count %></td>
-        <td><%= link_to edit_category_path(category) do%>
-            <%= fa_icon 'pencil', class: 'text-warning' %>
-          <% end %>
-        </td>
-      </tr>
-    <% end %>
+    <%= render @categories %>
   </tbody>
 </table>

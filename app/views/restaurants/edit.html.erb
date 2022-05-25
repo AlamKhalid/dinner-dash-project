@@ -17,18 +17,6 @@
     </tr>
   </thead>
   <tbody>
-    <% @restaurant.items.each do |item| %>
-      <tr>
-        <th scope='row'><%= item.id %></th>
-        <td><%= item.name %></td>
-        <td><%= item.categories.pluck(:name).join(', ') %></td>
-        <td><%= item.price %></td>
-        <td><%= item.retired ? 'Yes' : 'No' %></td>
-        <td><%= link_to edit_restaurant_item_path(@restaurant, item) do %>
-            <%= fa_icon 'pencil', class: 'text-warning' %>
-          <% end %>
-        </td>
-      </tr>
-    <% end %>
+    <%= render partial: 'restaurants/restaurant_item', collection: @restaurant.items, as: :item %>
   </tbody>
 </table>

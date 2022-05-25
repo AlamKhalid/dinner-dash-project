@@ -1,0 +1,9 @@
+<tr>
+  <th scope='row'><%= order_counter + 1 %></th>
+  <td><%= order.restaurant.name %></td>
+  <td><%= order.cart_order_items.count %></td>
+  <td>Rs. <%= order.total_price %></td>
+  <td><%= order.status.titleize %></td>
+  <td><%= format_time(order.updated_at) %></td>
+  <td><%= link_to 'View Details', order, class: 'btn btn-dark'%></td>
+</tr>

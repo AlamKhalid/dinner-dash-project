@@ -15,24 +15,7 @@
       </tr>
     </thead>
     <tbody>
-      <% @cart.cart_order_items.each_with_index do |cart_item, idx|%>
-        <tr>
-          <th scope='row'><%= idx + 1 %></th>
-          <td><%= cart_item.item.name %></td>
-          <td id='quantity-cart-<%= cart_item.id %>'><%= cart_item.quantity %></td>
-          <td>Rs. <%= cart_item.item.price %></td>
-          <td class='text-center'>
-            <%= form_with url: cart_items_update_path(id: cart_item), method: 'put' do |f| %>
-              <%= f.hidden_field :quantity, value: cart_item.quantity, id: "quantity-#{cart_item.id}" %>
-              <%= f.submit '-', id: "dec-btn-cart-item-#{cart_item.id}", class: 'btn quantity-btn mr-2 cart-item-dec', disabled: cart_item.quantity == 1 ,'data-cart-item-id': cart_item.id %>
-              <%= f.submit '+',class: 'btn quantity-btn cart-item-inc', 'data-cart-item-id': cart_item.id %>
-            <% end %>
-          </td>
-          <td class='text-center'>
-            <%= link_to(raw(fa_icon 'trash', class: 'text-danger cart-delete-icon'), cart_items_destroy_path(id: cart_item.id), method: 'delete', data: {confirm: 'Are you sure?'})%>
-          </td>
-        </tr>
-      <% end %>
+      <%= render partial: 'cart_item', collection: @cart.cart_order_items, as: :cart_item%>
       <tr class='table-secondary'>
         <td></td>
         <td></td>

@@ -1,0 +1,7 @@
+<tr>
+  <th scope='row'><%= single_cart_order_item.item.id %></th>
+  <td><%= single_cart_order_item.item.name %></td>
+  <td><%= single_cart_order_item.quantity %></td>
+  <td>Rs. <%= single_cart_order_item.quantity.to_i * single_cart_order_item.item.price %></td>
+  <td><%= link_to 'View Item', restaurant_item_path(single_cart_order_item.item.restaurant, single_cart_order_item.item), class: 'btn btn-dark'%></td>
+</tr>
