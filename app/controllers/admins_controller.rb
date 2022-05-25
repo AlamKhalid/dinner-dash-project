@@ -12,7 +12,7 @@ class AdminsController < ApplicationController
   end
 
   def status_filter
-    @orders = if params[:status] == '-1'
+    @orders = if params[:status] == 'all'
                 Order.all_orders
               else
                 Order.with_status(params[:status])
