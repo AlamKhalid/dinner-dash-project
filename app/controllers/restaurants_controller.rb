@@ -40,7 +40,9 @@ class RestaurantsController < ApplicationController
   end
 
   def category_filter
-    @restaurant = Restaurant.find(params[:restaurant_id])
+    @restaurant = Restaurant.find_by(id: params[:restaurant_id])
+    return if @restaurant.nil?
+
     filter_items_by_category
     respond_to do |format|
       format.js
@@ -76,10 +78,13 @@ class RestaurantsController < ApplicationController
   def popular_items
     item_id = Item.restaurant_items(params[:restaurant_id]).order_items.group(:id).count.max_by { |_k, v| v }.first
     @items = []
-    @items << Item.find(item_id)
+    item = Item.find_by(id: item_id)
+    return if item.nil?
+
+    @items << item
   end
 
   def find_restaurant
-    @restaurant = Restaurant.find(params[:id])
+    @restaurant = Restaurant.find_by(id: params[:id]) or render_not_found_template
   end
 end

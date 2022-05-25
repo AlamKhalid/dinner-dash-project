@@ -1,2 +1,5 @@
 $('#flash').addClass('<%= @class_alert %>')
 $('#flash').html("<%= @flash_msg %><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>")
+$('#cart-badge').removeClass('d-none')
+$('#cart-badge').addClass('d-block')
+$('#cart-badge').html('<%= @item_count %>')

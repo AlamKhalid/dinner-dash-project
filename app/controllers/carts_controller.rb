@@ -2,24 +2,26 @@
 
 # Controller for cart
 class CartsController < ApplicationController
+  before_action :find_cart, only: %i[destroy]
+
   def index
     @cart = Cart.includes(:cart_order_items, :items).find_by(user_id: current_or_guest_user.id)
   end
 
   def create
-    return if Item.find(params[:item_id]).retired
+    return if Item.find_by(id: params[:item_id])&.retired
 
     success_flash
     @cart = Cart.find_by(user_id: current_or_guest_user.id)
     cart_create_action
+    @item_count = @cart.cart_order_items.count
     respond_to do |format|
       format.js
     end
   end
 
   def destroy
-    @cart = Cart.find(params[:id])
-    return if @cart.user_id != current_or_guest_user.id
+    return if @cart.nil? || @cart.user_id != current_or_guest_user.id
 
     @cart.destroy ? flash[:notice] = 'Cart deleted successfully' : flash[:alert] = 'An error occured'
     redirect_to carts_path
@@ -58,7 +60,7 @@ class CartsController < ApplicationController
     @cart = Cart.new
     @cart.user_id = current_or_guest_user.id
     @cart.restaurant_id = params[:restaurant_id]
-    @cart.total_price += params[:quantity].to_i * Item.find(params[:item_id]).price
+    @cart.total_price += params[:quantity].to_i * Item.find_by(id: params[:item_id])&.price
   end
 
   def create_or_update_cart_item
@@ -74,13 +76,17 @@ class CartsController < ApplicationController
 
   def create_new_cart_item
     @cart_item = CartItem.create(cart_order_id: @cart.id, item_id: params[:item_id], quantity: params[:quantity])
-    @cart.total_price += params[:quantity].to_i * Item.find(params[:item_id]).price
+    @cart.total_price += params[:quantity].to_i * Item.find_by(id: params[:item_id])&.price
   end
 
   def update_old_cart_item
     old_qty = @cart_item.quantity
-    item_price = Item.find(params[:item_id]).price
+    item_price = Item.find_by(id: params[:item_id])&.price
     @cart_item.quantity = params[:quantity].to_i + old_qty
     @cart.total_price += (params[:quantity].to_i * item_price)
+  end
+
+  def find_cart
+    @cart = Cart.find_by(params[:id])
   end
 end

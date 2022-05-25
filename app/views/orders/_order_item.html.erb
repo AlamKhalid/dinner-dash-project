@@ -1,6 +1,6 @@
 <h6><strong>Order ID:</strong> <%= @order.id %></h6>
-<h6><strong>Order initiated at:</strong> <%= @order.created_at.to_time.strftime('%B %e at %l:%M %p') %></h6>
-<h6><strong>Order Status:</strong><em><%= @order.status.titleize %></em>, Last Modified at: <%= @order.updated_at.to_time.strftime('%B %e at %l:%M %p') %></h6>
+<h6><strong>Order initiated at:</strong> <%= format_time(@order.created_at) %></h6>
+<h6><strong>Order Status:</strong><em><%= @order.status.titleize %></em>, Last Modified at: <%= format_time(@order.updated_at) %></h6>
 <h6><strong>Customer Name:</strong> <%= @order.user.full_name %></h6>
 <h6><strong>Customer Email:</strong> <%= @order.user.email %></h6>
 <h6><strong>Restaurant:</strong> <%= @order.restaurant.name %></h6>
@@ -15,15 +15,7 @@
     </tr>
   </thead>
   <tbody>
-    <% @order.cart_order_items.each do |coi|%>
-      <tr>
-        <th scope='row'><%= coi.item.id %></th>
-        <td><%= coi.item.name %></td>
-        <td><%= coi.quantity %></td>
-        <td>Rs. <%= coi.quantity.to_i * coi.item.price %></td>
-        <td><%= link_to 'View Item', restaurant_item_path(coi.item.restaurant, coi.item), class: 'btn btn-dark'%></td>
-      </tr>
-    <% end %>
+    <%= render partial: 'cart_order_item', collection: @order.cart_order_items, as: :single_cart_order_item%>
     <tr class='table-secondary'>
       <td></td>
       <td></td>

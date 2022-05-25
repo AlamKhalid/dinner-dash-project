@@ -74,11 +74,13 @@ Rails.application.configure do
   config.action_mailer.delivery_method = :sendmail
   config.action_mailer.perform_deliveries = true
   config.action_mailer.default_options = { from: Rails.application.credentials.gmail[:email] }
+  config.action_mailer.default_url_options = { host: 'alam-dinner-dash.herokuapp.com' }
+
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
     address: 'smtp.gmail.com',
     port: 587,
-    domain: 'https://alam-dinner-dash.herokuapp.com',
+    domain: 'alam-dinner-dash.herokuapp.com',
     user_name: Rails.application.credentials.gmail[:email],
     password: Rails.application.credentials.gmail[:password],
     authentication: 'plain',
