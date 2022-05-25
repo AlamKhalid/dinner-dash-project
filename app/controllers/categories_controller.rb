@@ -52,6 +52,6 @@ class CategoriesController < ApplicationController
   end
 
   def find_category
-    @category = Category.find_by(id: params[:id]) or not_found
+    @category = Category.find_by(id: params[:id]) or render_not_found_template
   end
 end

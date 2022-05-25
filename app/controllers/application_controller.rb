@@ -22,7 +22,7 @@ class ApplicationController < ActionController::Base
 
   private
 
-  def not_found
+  def render_not_found_template
     render file: Rails.root.join('public/404.html'), layout: false, status: :not_found
   end
 

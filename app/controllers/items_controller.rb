@@ -50,10 +50,10 @@ class ItemsController < ApplicationController
   end
 
   def find_restaurant
-    @restaurant = Restaurant.find_by(id: params[:restaurant_id]) or not_found
+    @restaurant = Restaurant.find_by(id: params[:restaurant_id]) or render_not_found_template
   end
 
   def find_item
-    @item = Item.includes(:restaurant).find_by(id: params[:id]) or not_found
+    @item = Item.includes(:restaurant).find_by(id: params[:id]) or render_not_found_template
   end
 end
