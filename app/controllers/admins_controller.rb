@@ -5,7 +5,6 @@ class AdminsController < ApplicationController
   before_action :authorize_admin, only: %i[index status_filter]
 
   def index
-    authorize :admin
     @restaurants = Restaurant.restaurant_with_items
     @categories = Category.order(:id).all
     @orders = Order.all_orders
