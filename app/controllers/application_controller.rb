@@ -39,6 +39,11 @@ class ApplicationController < ActionController::Base
     # After this block runs, the guest_user will be destroyed!
     return if guest_user.cart.nil?
 
+    if Cart.find_by(user_id: current_user.id)
+      Cart.find_by(id: guest_user.cart.id).destroy
+      return
+    end
+
     guest_user.cart.update(user_id: current_user.id)
   end
 
