@@ -3,6 +3,7 @@
 # Controller for orders
 class OrdersController < ApplicationController
   before_action :find_order, only: %i[show edit update]
+  before_action :authorize_order, only: %i[show edit update]
 
   def index
     authorize Order
@@ -47,6 +48,9 @@ class OrdersController < ApplicationController
 
   def find_order
     @order = Order.includes(:restaurant, :cart_order_items).find_by(id: params[:id]) or render_not_found_template
+  end
+
+  def authorize_order
     authorize @order
   end
 end
