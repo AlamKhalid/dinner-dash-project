@@ -6,8 +6,8 @@
   <td class='text-center'>
     <%= form_with url: cart_items_update_path(id: cart_item), method: 'put' do |f| %>
       <%= f.hidden_field :quantity, value: cart_item.quantity, id: "quantity-#{cart_item.id}" %>
-      <%= f.submit '-', id: "dec-btn-cart-item-#{cart_item.id}", class: 'btn quantity-btn mr-2 cart-item-dec', disabled: cart_item.quantity == 1 ,'data-cart-item-id': cart_item.id %>
-      <%= f.submit '+',class: 'btn quantity-btn cart-item-inc', 'data-cart-item-id': cart_item.id %>
+      <%= f.button '-', value: "remove", id: "dec-btn-cart-item-#{cart_item.id}", class: 'btn quantity-btn mr-2 cart-item-dec', disabled: cart_item.quantity == 1 ,'data-cart-item-id': cart_item.id, type: 'submit' %>
+      <%= f.button '+', value: "add" , class: 'btn quantity-btn cart-item-inc', 'data-cart-item-id': cart_item.id, type: 'submit' %>
     <% end %>
   </td>
   <td class='text-center'>

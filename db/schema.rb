@@ -12,7 +12,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20_220_505_130_039) do
+ActiveRecord::Schema.define(version: 20_220_525_173_918) do
   # These are extensions that must be enabled in order to support this database
   enable_extension 'plpgsql'
 
@@ -45,6 +45,7 @@ ActiveRecord::Schema.define(version: 20_220_505_130_039) do
     t.string 'type', null: false
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
+    t.index %w[cart_order_id item_id], name: 'index_cart_order_items_on_cart_order_id_and_item_id', unique: true
     t.index ['cart_order_id'], name: 'index_cart_order_items_on_cart_order_id'
     t.index ['item_id'], name: 'index_cart_order_items_on_item_id'
   end

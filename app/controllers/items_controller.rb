@@ -55,5 +55,6 @@ class ItemsController < ApplicationController
 
   def find_item
     @item = Item.includes(:restaurant).find_by(id: params[:id]) or render_not_found_template
+    render_not_found_template if @restaurant.id != @item.restaurant.id
   end
 end

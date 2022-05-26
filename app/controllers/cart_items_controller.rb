@@ -7,9 +7,9 @@ class CartItemsController < ApplicationController
   def update
     return if params[:quantity] == @cart_item.quantity || @cart.user_id != current_or_guest_user.id
 
-    if params[:commit] == '+'
+    if params[:button] == 'add'
       adding_cart_action
-    elsif @cart_item.quantity != 1
+    elsif remove_button_invoked
       removing_cart_action
     end
     save_cart_and_cart_item
@@ -61,5 +61,9 @@ class CartItemsController < ApplicationController
   def removing_cart_action
     @cart_item.quantity -= 1
     @cart.total_price -= @cart_item.item.price
+  end
+
+  def remove_button_invoked
+    params[:button] == 'remove' && @cart_item.quantity != 1
   end
 end

@@ -5,14 +5,13 @@ class AdminsController < ApplicationController
   before_action :authorize_admin, only: %i[index status_filter]
 
   def index
-    authorize :admin
     @restaurants = Restaurant.restaurant_with_items
     @categories = Category.order(:id).all
     @orders = Order.all_orders
   end
 
   def status_filter
-    @orders = if params[:status] == '-1'
+    @orders = if params[:status] == 'all'
                 Order.all_orders
               else
                 Order.with_status(params[:status])

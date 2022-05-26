@@ -87,6 +87,6 @@ class CartsController < ApplicationController
   end
 
   def find_cart
-    @cart = Cart.find_by(params[:id])
+    @cart = Cart.find_by(id: params[:id]) or render_not_found_template
   end
 end
