@@ -1,4 +1,5 @@
 $('#total-price-cart').html('Rs. <%= @cart.total_price %>')
+$('#quantity-cart-<%= @item_id %>').html('<%= @cart_item.quantity %>')
 <% if @cart_item.quantity == 1 %>
   $('#dec-btn-cart-item-<%= @item_id %>').prop("disabled", true)
 <% else %>
