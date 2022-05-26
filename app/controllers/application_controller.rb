@@ -26,9 +26,11 @@ class ApplicationController < ActionController::Base
     render file: Rails.root.join('public/404.html'), layout: false, status: :not_found
   end
 
-  def user_not_authorized
-    flash[:alert] = 'Not authorized to perform this action'
-    redirect_back(fallback_location: new_user_session_path)
+  def user_not_authorized(exception)
+    policy_name = exception.policy.class.to_s.underscore
+
+    flash[:error] = t "#{policy_name}.#{exception.query}", scope: 'pundit', default: :default
+    redirect_back(fallback_location: root_path)
   end
 
   def transfer_guest_to_user
