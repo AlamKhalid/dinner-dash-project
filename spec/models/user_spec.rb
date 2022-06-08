@@ -30,10 +30,44 @@ RSpec.describe User, type: :model do
     end
   end
 
-  context 'when password is short' do
-    it 'cannot be created' do
-      user.password = '123'
-      expect(user).to be_invalid
+  describe '.validations' do
+    context 'when password is short' do
+      it 'cannot be created' do
+        user.password = '123'
+        expect(user).to be_invalid
+      end
+    end
+
+    context 'when display name is present' do
+      it 'is valid is length is more than 2' do
+        user.display_name = 'Alam'
+        expect(user).to be_valid
+      end
+
+      it 'is valid is length is 1' do
+        user.display_name = 'a'
+        expect(user).to be_invalid
+      end
+    end
+  end
+
+  describe '.association' do
+    context 'with valid associations' do
+      it 'has many orders' do
+        expect(user).to have_many(:orders)
+      end
+
+      it 'has one cart' do
+        expect(user).to have_one(:cart)
+      end
+    end
+  end
+
+  describe '.uniqueness' do
+    context 'when email is unique' do
+      it 'is valid' do
+        expect(user).to validate_uniqueness_of(:email).case_insensitive
+      end
     end
   end
 end
