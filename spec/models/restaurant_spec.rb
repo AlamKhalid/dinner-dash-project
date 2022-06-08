@@ -3,12 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe Restaurant, type: :model do
-  let(:restaurant) { FactoryBot.build :restaurant }
-  let(:restaurant_dup) { FactoryBot.build :restaurant }
-
-  # it 'is valid if the name is unique' do
-  #     expect(subject).to be_valid
-  # end
+  let(:restaurant) { FactoryBot.create :restaurant }
 
   describe '.creation' do
     context 'when valid' do
@@ -33,30 +28,19 @@ RSpec.describe Restaurant, type: :model do
   describe '.association' do
     context 'with valid associations' do
       it 'has many items' do
-        items = described_class.reflect_on_association(:items)
-        expect(items.macro).to eq(:has_many)
+        expect(restaurant).to have_many(:items)
       end
 
       it 'has many cart_orders' do
-        cart_orders = described_class.reflect_on_association(:cart_orders)
-        expect(cart_orders.macro).to eq(:has_many)
+        expect(restaurant).to have_many(:cart_orders)
       end
     end
   end
 
   describe '.uniqueness' do
-    context 'when name is not unique' do
-      it 'is invalid' do
-        restaurant.save
-        expect(restaurant_dup).to be_invalid
-      end
-    end
-
     context 'when name is unique' do
       it 'is valid' do
-        restaurant_dup.name = 'Res2'
-        restaurant.save
-        expect(restaurant_dup).to be_valid
+        expect(restaurant).to validate_uniqueness_of(:name)
       end
     end
   end
