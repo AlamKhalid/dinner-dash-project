@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
-  let(:user) { FactoryBot.build :user }
+  let(:user) { FactoryBot.create :user }
 
   describe '.creation' do
     context 'when valid' do
@@ -32,7 +32,7 @@ RSpec.describe User, type: :model do
 
   describe '.validations' do
     context 'when password is short' do
-      it 'cannot be created' do
+      it 'is invalid' do
         user.password = '123'
         expect(user).to be_invalid
       end
@@ -44,7 +44,7 @@ RSpec.describe User, type: :model do
         expect(user).to be_valid
       end
 
-      it 'is valid is length is 1' do
+      it 'is invalid if length is 1' do
         user.display_name = 'a'
         expect(user).to be_invalid
       end
