@@ -30,7 +30,7 @@ RSpec.describe Item, type: :model do
     end
   end
 
-  describe '.validations-categories' do
+  describe '.validations_categories' do
     context 'without categories' do
       it 'is invalid' do
         item.categories = []
@@ -46,7 +46,7 @@ RSpec.describe Item, type: :model do
     end
   end
 
-  describe '.validations-price' do
+  describe '.validations_price' do
     context 'when price is less than 0' do
       it 'is invalid' do
         item.price = -1
@@ -98,12 +98,21 @@ RSpec.describe Item, type: :model do
         expect(item).to belong_to(:restaurant)
       end
 
-      it 'has and belongs to many categoires' do
+      it 'has and belongs to many categories' do
         expect(item).to have_and_belong_to_many(:categories)
       end
 
       it 'has one attached picture' do
         expect(item).to have_one_attached(:item_picture)
+      end
+    end
+  end
+
+  describe '.active_storage_attachment' do
+    context 'when attaching image' do
+      it 'gets attached' do
+        item.item_picture.attach(io: File.open('./app/assets/images/stock_img.jpeg'), filename: 'test-file.jpeg')
+        expect(item.item_picture).to be_attached
       end
     end
   end
