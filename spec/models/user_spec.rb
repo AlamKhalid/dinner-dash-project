@@ -70,4 +70,12 @@ RSpec.describe User, type: :model do
       end
     end
   end
+
+  describe '.enum' do
+    context 'with role enum' do
+      it 'is valid' do
+        expect(user).to define_enum_for(:role).with_values(%i[normal admin]).with_prefix(:role)
+      end
+    end
+  end
 end

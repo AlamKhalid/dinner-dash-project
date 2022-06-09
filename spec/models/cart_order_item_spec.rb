@@ -3,7 +3,6 @@
 require 'rails_helper'
 
 RSpec.describe CartOrderItem, type: :model do
-
   let(:cart_order_item) { FactoryBot.create :cart_order_item }
 
   describe '.creation' do
