@@ -81,6 +81,8 @@ group :test do
   gem 'selenium-webdriver'
   # Easy installation and use of chromedriver to run system tests with Chrome
   gem 'chromedriver-helper'
+  # Faker gem
+  gem 'faker'
   # Rspec rails
   gem 'rspec-rails'
   # Shoulda-matchers

@@ -1,7 +1,8 @@
 # frozen_string_literal: true
+require 'faker'
 
 FactoryBot.define do
   factory :category do
-    name { 'Cat1' }
+    name { Faker::Color.name }
   end
 end

@@ -107,6 +107,8 @@ GEM
     execjs (2.8.1)
     factory_bot (6.2.1)
       activesupport (>= 5.0.0)
+    faker (2.21.0)
+      i18n (>= 1.8.11, < 2)
     ffi (1.15.5)
     font-awesome-rails (4.7.0.8)
       railties (>= 3.2, < 8.0)
@@ -288,6 +290,7 @@ DEPENDENCIES
   devise
   devise-guests
   factory_bot
+  faker
   font-awesome-rails
   jbuilder (~> 2.5)
   jquery-rails
