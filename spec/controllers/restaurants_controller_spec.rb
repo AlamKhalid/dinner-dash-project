@@ -115,7 +115,7 @@ RSpec.describe RestaurantsController, type: :controller do
       before { allow(controller).to receive(:current_user).and_return(admin) }
 
       it 'creates a new restaurant' do
-        expect { post :create, params: valid_params }.to change(Restaurant, :count).by(+1)
+        expect { post :create, params: valid_params }.to change(Restaurant, :count).by(1)
       end
 
       it 'creates a restaurant with correct attributes' do

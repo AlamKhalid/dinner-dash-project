@@ -16,16 +16,13 @@ RSpec.describe User, type: :model do
       it 'cannot be created without full name' do
         user.full_name = nil
         expect(user).not_to be_valid
+        expect(user.errors).to include(:full_name)
       end
 
       it 'cannot be created without email' do
         user.email = nil
         expect(user).not_to be_valid
-      end
-
-      it 'cannot be created without password' do
-        user.password = nil
-        expect(user).not_to be_valid
+        expect(user.errors).to include(:email)
       end
     end
   end
@@ -35,6 +32,7 @@ RSpec.describe User, type: :model do
       it 'is invalid' do
         user.password = '123'
         expect(user).to be_invalid
+        expect(user.errors).to include(:password)
       end
     end
 
@@ -47,6 +45,7 @@ RSpec.describe User, type: :model do
       it 'is invalid if length is 1' do
         user.display_name = 'a'
         expect(user).to be_invalid
+        expect(user.errors).to include(:display_name)
       end
     end
   end

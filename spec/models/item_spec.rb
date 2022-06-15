@@ -16,16 +16,19 @@ RSpec.describe Item, type: :model do
       it 'cannot be created without name' do
         item.name = nil
         expect(item).not_to be_valid
+        expect(item.errors).to include(:name)
       end
 
       it 'cannot be created without description' do
         item.description = nil
         expect(item).not_to be_valid
+        expect(item.errors).to include(:description)
       end
 
       it 'cannot be created without price' do
         item.price = nil
         expect(item).not_to be_valid
+        expect(item.errors).to include(:price)
       end
     end
   end
@@ -35,6 +38,7 @@ RSpec.describe Item, type: :model do
       it 'is invalid' do
         item.categories = []
         expect(item).to be_invalid
+        expect(item.errors).to include(:categories)
       end
     end
 
@@ -51,6 +55,7 @@ RSpec.describe Item, type: :model do
       it 'is invalid' do
         item.price = -1
         expect(item).to be_invalid
+        expect(item.errors).to include(:price)
       end
     end
 
@@ -58,6 +63,7 @@ RSpec.describe Item, type: :model do
       it 'is invalid' do
         item.price = 'abc'
         expect(item).to be_invalid
+        expect(item.errors).to include(:price)
       end
     end
 

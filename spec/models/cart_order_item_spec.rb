@@ -16,16 +16,19 @@ RSpec.describe CartOrderItem, type: :model do
       it 'cannot be created without item' do
         cart_order_item.item_id = nil
         expect(cart_order_item).not_to be_valid
+        expect(cart_order_item.errors).to include(:item_id)
       end
 
       it 'cannot be created without type' do
         cart_order_item.type = nil
         expect(cart_order_item).not_to be_valid
+        expect(cart_order_item.errors).to include(:type)
       end
 
       it 'cannot be created without quantity' do
         cart_order_item.quantity = nil
         expect(cart_order_item).not_to be_valid
+        expect(cart_order_item.errors).to include(:quantity)
       end
     end
   end
@@ -55,6 +58,7 @@ RSpec.describe CartOrderItem, type: :model do
       it 'is invalid' do
         cart_order_item.quantity = -1
         expect(cart_order_item).to be_invalid
+        expect(cart_order_item.errors).to include(:quantity)
       end
     end
 
@@ -62,6 +66,7 @@ RSpec.describe CartOrderItem, type: :model do
       it 'is invalid' do
         cart_order_item.quantity = 'abc'
         expect(cart_order_item).to be_invalid
+        expect(cart_order_item.errors).to include(:quantity)
       end
     end
 
@@ -76,6 +81,7 @@ RSpec.describe CartOrderItem, type: :model do
       it 'is invalid' do
         cart_order_item.quantity = 2.0
         expect(cart_order_item).not_to be_valid
+        expect(cart_order_item.errors).to include(:quantity)
       end
     end
   end

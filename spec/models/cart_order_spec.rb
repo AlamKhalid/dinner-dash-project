@@ -16,21 +16,25 @@ RSpec.describe CartOrder, type: :model do
       it 'cannot be created without user' do
         cart_order.user_id = nil
         expect(cart_order).not_to be_valid
+        expect(cart_order.errors).to include(:user_id)
       end
 
       it 'cannot be created without restaurant' do
         cart_order.restaurant_id = nil
         expect(cart_order).not_to be_valid
+        expect(cart_order.errors).to include(:restaurant_id)
       end
 
       it 'cannot be created without price' do
         cart_order.total_price = nil
         expect(cart_order).not_to be_valid
+        expect(cart_order.errors).to include(:total_price)
       end
 
       it 'cannot be created without type' do
         cart_order.type = nil
         expect(cart_order).not_to be_valid
+        expect(cart_order.errors).to include(:type)
       end
     end
   end
@@ -40,6 +44,7 @@ RSpec.describe CartOrder, type: :model do
       it 'is invalid' do
         cart_order.total_price = -1
         expect(cart_order).to be_invalid
+        expect(cart_order.errors).to include(:total_price)
       end
     end
 
@@ -47,6 +52,7 @@ RSpec.describe CartOrder, type: :model do
       it 'is invalid' do
         cart_order.total_price = 'abc'
         expect(cart_order).to be_invalid
+        expect(cart_order.errors).to include(:total_price)
       end
     end
 

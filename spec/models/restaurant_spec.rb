@@ -16,11 +16,13 @@ RSpec.describe Restaurant, type: :model do
       it 'cannot be created without name' do
         restaurant.name = nil
         expect(restaurant).not_to be_valid
+        expect(restaurant.errors).to include(:name)
       end
 
       it 'cannot be created without location' do
         restaurant.location = nil
         expect(restaurant).not_to be_valid
+        expect(restaurant.errors).to include(:location)
       end
     end
   end

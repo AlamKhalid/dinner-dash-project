@@ -16,6 +16,7 @@ RSpec.describe Category, type: :model do
       it 'cannot be created without name' do
         category.name = nil
         expect(category).not_to be_valid
+        expect(category.errors).to include(:name)
       end
     end
   end
