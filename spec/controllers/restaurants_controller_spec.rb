@@ -193,7 +193,6 @@ RSpec.describe RestaurantsController, type: :controller do
         expect(assigns(:class_alert)).to be_present
         expect(assigns(:class_alert)).to match('alert-danger')
       end
-
     end
   end
 

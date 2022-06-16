@@ -50,6 +50,8 @@ class CartItemsController < ApplicationController
 
   def find_cart_item_and_cart
     @cart_item = CartItem.find_by(id: params[:id]) or render_not_found_template
+    return if @cart_item.nil?
+
     @cart = @cart_item.cart_order
   end
 

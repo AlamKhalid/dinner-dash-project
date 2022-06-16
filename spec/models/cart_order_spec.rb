@@ -88,7 +88,6 @@ RSpec.describe CartOrder, type: :model do
       it 'belongs to a user' do
         expect(cart_order).to belong_to(:user)
       end
-
     end
   end
 end
