@@ -26,6 +26,7 @@ RSpec.describe RestaurantsController, type: :controller do
 
       it 'redirects to root path' do
         get :new
+        expect(controller).to use_before_action(:authorize_admin)
         expect(response.status).to eq(302)
         expect(response).to redirect_to(root_path)
       end

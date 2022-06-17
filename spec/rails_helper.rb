@@ -37,9 +37,6 @@ RSpec.configure do |config|
   config.include FactoryBot::Syntax::Methods
   # gives helper method like sign in
   config.include Devise::Test::ControllerHelpers, type: :controller
-  # shoulda-matchers
-  config.include(Shoulda::Matchers::ActiveModel, type: :model)
-  config.include(Shoulda::Matchers::ActiveRecord, type: :model)
 
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false
@@ -89,5 +86,12 @@ RSpec.configure do |config|
   end
   config.after(:all) do
     DatabaseCleaner.clean
+  end
+end
+
+Shoulda::Matchers.configure do |config|
+  config.integrate do |with|
+    with.test_framework :rspec
+    with.library :rails
   end
 end
