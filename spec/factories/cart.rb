@@ -5,6 +5,6 @@ FactoryBot.define do
     association :user
     association :restaurant
     type { 'Cart' }
-    total_price { 100 }
+    total_price { 200 }
   end
 end

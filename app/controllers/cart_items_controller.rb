@@ -25,8 +25,6 @@ class CartItemsController < ApplicationController
     if @cart_item.destroy
       check_exisiting_cart
       flash[:notice] = 'Cart item deleted successfully'
-    else
-      flash[:alert] = 'An error occured'
     end
     redirect_to carts_path
   end

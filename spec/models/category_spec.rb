@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe Category, type: :model do
-  let(:category) { FactoryBot.create :category }
+  let(:category) { FactoryBot.create :category, name: 'Cattt' }
 
   describe '.creation' do
     context 'when valid' do

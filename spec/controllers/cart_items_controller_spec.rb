@@ -31,7 +31,10 @@ RSpec.describe CartItemsController, type: :controller do
     end
 
     context 'when subtracting cart item' do
-      before { cart_item.quantity = 2 }
+      before do
+        cart_item.quantity = 2
+        cart_item.save
+      end
 
       it 'returns successful response with updated attributes' do
         put :update, xhr: true, params: { id: cart_item.id, button: 'remove', quantity: 1, format: 'js' }
@@ -42,6 +45,12 @@ RSpec.describe CartItemsController, type: :controller do
         expect(response.status).to eq(200)
         expect(assigns(:item_id)).to eq(cart_item.id)
         expect(cart_item.quantity).not_to eq(old_qty)
+      end
+
+      it 'changes cart item attributes' do
+        expect { put :update, xhr: true, params: { id: cart_item.id, button: 'remove', quantity: 1, format: 'js' } }.to change {
+                                                                                                            cart_item.reload.quantity
+                                                                                                          }.by(-1)
       end
     end
 
@@ -91,6 +100,20 @@ RSpec.describe CartItemsController, type: :controller do
         expect(response).to redirect_to(carts_path)
         expect(flash[:notice]).to be_present
         expect(flash[:notice]).to match('Cart item deleted successfully')
+      end
+    end
+
+    context 'when more then one cart item are there' do
+      it 'does not delete cart' do
+        item = FactoryBot.create :item_2, name: 'Item2'
+        cart_item_dup = FactoryBot.create :cart_order_item, cart_order: cart, type: 'CartItem', item: item
+        cart.total_price = 400
+        cart.save
+        delete :destroy, params: { id: cart_item.id }
+        old_price = cart.total_price
+        cart.reload
+        expect(cart.total_price).not_to eq(old_price)
+        expect(cart_item_dup).not_to eq(nil)
       end
     end
 
