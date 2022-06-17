@@ -220,8 +220,6 @@ RSpec.describe RestaurantsController, type: :controller do
 
   describe '#PUT category_filter' do
     context 'when valid' do
-
-
       it 'returns items with specific category' do
         put :category_filter, params: { restaurant_id: item.restaurant.id, category_name: item.categories[0].name,
                                         format: 'js' }
@@ -234,7 +232,7 @@ RSpec.describe RestaurantsController, type: :controller do
         order.save
         order_item.save
         put :category_filter, xhr: true, params: { restaurant_id: restaurant.id, category_name: 'popular',
-          format: 'js' }
+                                                   format: 'js' }
         expect(response).to be_successful
         expect(response.status).to eq(200)
         expect(assigns(:items)).to eq([item])
@@ -257,7 +255,6 @@ RSpec.describe RestaurantsController, type: :controller do
   end
 
   describe '#GET show' do
-
     context 'when id is valid' do
       it 'returns successful response and sets restaurant and items' do
         get :show, params: { id: restaurant.id }

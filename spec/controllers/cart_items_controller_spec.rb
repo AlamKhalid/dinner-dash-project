@@ -21,12 +21,16 @@ RSpec.describe CartItemsController, type: :controller do
       end
 
       it 'changes cart item attributes' do
-        expect { put :update, xhr: true, params: { id: cart_item.id, button: 'add', quantity: 2, format: 'js' } }.to change {
-                                                                                                            cart_item.reload.quantity
-                                                                                                          }.by(1)
-        expect { put :update, xhr: true, params: { id: cart_item.id, button: 'add', quantity: 2, format: 'js' } }.to change {
-                                                                                                            cart.reload.total_price
-                                                                                                          }.by(cart_item.item.price)
+        expect do
+          put :update, xhr: true, params: { id: cart_item.id, button: 'add', quantity: 2, format: 'js' }
+        end.to change {
+                 cart_item.reload.quantity
+               }.by(1)
+        expect do
+          put :update, xhr: true, params: { id: cart_item.id, button: 'add', quantity: 2, format: 'js' }
+        end.to change {
+                 cart.reload.total_price
+               }.by(cart_item.item.price)
       end
     end
 
@@ -48,9 +52,11 @@ RSpec.describe CartItemsController, type: :controller do
       end
 
       it 'changes cart item attributes' do
-        expect { put :update, xhr: true, params: { id: cart_item.id, button: 'remove', quantity: 1, format: 'js' } }.to change {
-                                                                                                            cart_item.reload.quantity
-                                                                                                          }.by(-1)
+        expect do
+          put :update, xhr: true, params: { id: cart_item.id, button: 'remove', quantity: 1, format: 'js' }
+        end.to change {
+                 cart_item.reload.quantity
+               }.by(-1)
       end
     end
 
