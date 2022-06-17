@@ -8,7 +8,7 @@ RSpec.describe CartItemsController, type: :controller do
   let(:cart) { FactoryBot.create :cart, user: user, type: 'Cart' }
   let(:cart_item) { FactoryBot.create :cart_order_item, cart_order: cart, type: 'CartItem' }
 
-  describe 'PUT update' do
+  describe '#PUT update' do
     before { allow(controller).to receive(:current_user).and_return(user) }
 
     context 'when adding cart item' do
@@ -90,7 +90,7 @@ RSpec.describe CartItemsController, type: :controller do
     end
   end
 
-  describe 'DELETE destroy' do
+  describe '#DELETE destroy' do
     before { allow(controller).to receive(:current_user).and_return(user) }
 
     context 'when cart is owned' do

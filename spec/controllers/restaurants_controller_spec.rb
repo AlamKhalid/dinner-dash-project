@@ -10,7 +10,7 @@ RSpec.describe RestaurantsController, type: :controller do
   let(:order) { FactoryBot.create :cart_order, type: 'Order', user: user, restaurant: restaurant, status: 'ordered' }
   let(:order_item) { FactoryBot.create :cart_order_item, cart_order: order, item: item, type: 'OrderItem' }
 
-  describe 'GET index' do
+  describe '#GET index' do
     it 'returns a successful response with index template and restaurants' do
       get :index
       expect(response).to be_successful
@@ -20,7 +20,7 @@ RSpec.describe RestaurantsController, type: :controller do
     end
   end
 
-  describe 'GET new' do
+  describe '#GET new' do
     context 'with unauthenticated users' do
       before { allow(controller).to receive(:current_user).and_return(nil) }
 
@@ -57,7 +57,7 @@ RSpec.describe RestaurantsController, type: :controller do
     end
   end
 
-  describe 'POST create' do
+  describe '#POST create' do
     context 'with unauthenticated users' do
       before { allow(controller).to receive(:current_user).and_return(nil) }
 
@@ -115,7 +115,7 @@ RSpec.describe RestaurantsController, type: :controller do
     end
   end
 
-  describe 'GET edit' do
+  describe '#GET edit' do
     context 'with unauthenticated users' do
       before { allow(controller).to receive(:current_user).and_return(nil) }
 
@@ -152,7 +152,7 @@ RSpec.describe RestaurantsController, type: :controller do
     end
   end
 
-  describe 'PUT update' do
+  describe '#PUT update' do
     context 'with unauthenticated users' do
       before { allow(controller).to receive(:current_user).and_return(nil) }
 
@@ -217,7 +217,7 @@ RSpec.describe RestaurantsController, type: :controller do
     end
   end
 
-  describe 'PUT category_filter' do
+  describe '#PUT category_filter' do
     context 'when valid' do
 
 
@@ -255,7 +255,7 @@ RSpec.describe RestaurantsController, type: :controller do
     end
   end
 
-  describe 'GET show' do
+  describe '#GET show' do
 
     context 'when id is valid' do
       it 'returns successful response and sets restaurant and items' do
