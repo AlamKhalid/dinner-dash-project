@@ -50,7 +50,7 @@ class RestaurantsController < ApplicationController
   end
 
   def show
-    @items = @restaurant.items.where(retired: false)
+    @items = @restaurant&.items&.where(retired: false)
   end
 
   private
@@ -76,7 +76,7 @@ class RestaurantsController < ApplicationController
   end
 
   def popular_items
-    item_id = Item.restaurant_items(params[:restaurant_id]).order_items.group(:id).count.max_by { |_k, v| v }.first
+    item_id = Item.restaurant_items(params[:restaurant_id]).order_items.group(:id).count.max_by { |_k, v| v }&.first
     @items = []
     item = Item.find_by(id: item_id)
     return if item.nil?

@@ -25,8 +25,6 @@ class CartItemsController < ApplicationController
     if @cart_item.destroy
       check_exisiting_cart
       flash[:notice] = 'Cart item deleted successfully'
-    else
-      flash[:alert] = 'An error occured'
     end
     redirect_to carts_path
   end
@@ -50,6 +48,8 @@ class CartItemsController < ApplicationController
 
   def find_cart_item_and_cart
     @cart_item = CartItem.find_by(id: params[:id]) or render_not_found_template
+    return if @cart_item.nil?
+
     @cart = @cart_item.cart_order
   end
 
