@@ -7,91 +7,101 @@ RSpec.describe CartItemsController, type: :controller do
   let(:admin) { FactoryBot.create :admin }
   let(:cart) { FactoryBot.create :cart, user: user, type: 'Cart' }
   let(:cart_item) { FactoryBot.create :cart_order_item, cart_order: cart, type: 'CartItem' }
+  let(:item) { FactoryBot.create :item2, name: 'Item2' }
+  let(:cart_item_dup) { FactoryBot.create :cart_order_item, cart_order: cart, type: 'CartItem', item: item }
+  let(:valid_params) do
+    {
+      id: cart_item.id,
+      button: 'add',
+      quantity: 2,
+      format: 'js'
+    }
+  end
 
   describe '#PUT update' do
     before { allow(controller).to receive(:current_user).and_return(user) }
 
     context 'when adding cart item' do
-      it 'returns successful response' do
-        put :update, xhr: true, params: { id: cart_item.id, button: 'add', quantity: 2, format: 'js' }
+      it 'returns successful response with modified attributes' do
+        put :update, xhr: true, params: valid_params
+        old_qty = cart_item.quantity
+        old_price = cart.total_price
         cart_item.reload
+        cart.reload
         expect(response).to be_successful
         expect(response.status).to eq(200)
         expect(assigns(:item_id)).to eq(cart_item.id)
-      end
-
-      it 'changes cart item attributes' do
-        expect do
-          put :update, xhr: true, params: { id: cart_item.id, button: 'add', quantity: 2, format: 'js' }
-        end.to change {
-                 cart_item.reload.quantity
-               }.by(1)
-        expect do
-          put :update, xhr: true, params: { id: cart_item.id, button: 'add', quantity: 2, format: 'js' }
-        end.to change {
-                 cart.reload.total_price
-               }.by(cart_item.item.price)
+        expect(old_qty).not_to eq(cart_item.quantity)
+        expect(old_price).not_to eq(cart.total_price)
       end
     end
 
     context 'when subtracting cart item' do
       before do
         cart_item.quantity = 2
+        cart.total_price = 400
         cart_item.save
+        cart.save
+        valid_params[:quantity] = 1
+        valid_params[:button] = 'remove'
       end
 
       it 'returns successful response with updated attributes' do
-        put :update, xhr: true, params: { id: cart_item.id, button: 'remove', quantity: 1, format: 'js' }
+        put :update, xhr: true, params: valid_params
         old_qty = cart_item.quantity
+        old_price = cart.total_price
         cart_item.reload
         cart.reload
         expect(response).to be_successful
         expect(response.status).to eq(200)
         expect(assigns(:item_id)).to eq(cart_item.id)
-        expect(cart_item.quantity).not_to eq(old_qty)
-      end
-
-      it 'changes cart item attributes' do
-        expect do
-          put :update, xhr: true, params: { id: cart_item.id, button: 'remove', quantity: 1, format: 'js' }
-        end.to change {
-                 cart_item.reload.quantity
-               }.by(-1)
+        expect(old_qty).not_to eq(cart_item.quantity)
+        expect(old_price).not_to eq(cart.total_price)
       end
     end
 
     context 'when invalid params' do
-      before { cart_item.quantity = 1 }
-
       it 'returns if quantity are equal' do
-        put :update, xhr: true, params: { id: cart_item.id, button: 'add', quantity: 1, format: 'js' }
+        valid_params[:quantity] = 1
+        put :update, xhr: true, params: valid_params
         old_qty = cart_item.quantity
+        old_price = cart.total_price
+        cart_item.reload
+        cart.reload
         expect(response).to be_successful
-        expect(assigns(:item_id)).to eq(cart_item.id)
-        expect(cart_item.quantity).to eq(old_qty)
+        expect(assigns(:item_id)).to eq(nil)
+        expect(old_qty).to eq(cart_item.quantity)
+        expect(old_price).to eq(cart.total_price)
       end
 
       it 'does not do anything if button action is not defined' do
-        put :update, xhr: true, params: { id: cart_item.id, button: '', quantity: 2, format: 'js' }
+        valid_params[:button] = ''
+        put :update, xhr: true, params: valid_params
         old_qty = cart_item.quantity
+        old_price = cart.total_price
         cart_item.reload
+        cart.reload
         expect(response).to be_successful
         expect(assigns(:item_id)).to eq(cart_item.id)
-        expect(cart_item.quantity).to eq(old_qty)
+        expect(old_qty).to eq(cart_item.quantity)
+        expect(old_price).to eq(cart.total_price)
       end
     end
 
     context 'when cart is not owned' do
       before { allow(controller).to receive(:current_user).and_return(admin) }
 
-      it 'returns' do
-        put :update, xhr: true, params: { id: cart_item.id, button: 'add', quantity: 2, format: 'js' }
+      it 'returns from the action' do
+        put :update, xhr: true, params: valid_params
         old_qty = cart_item.quantity
+        old_price = cart.total_price
         cart_item.reload
+        cart.reload
         expect(response).to be_successful
         expect(response.status).to eq(200)
         expect(assigns(:item_id)).to eq(nil)
-        expect(cart_item.quantity).to eq(old_qty)
+        expect(old_qty).to eq(cart_item.quantity)
+        expect(old_price).to eq(cart.total_price)
       end
     end
   end
@@ -110,16 +120,25 @@ RSpec.describe CartItemsController, type: :controller do
     end
 
     context 'when more then one cart item are there' do
-      it 'does not delete cart' do
-        item = FactoryBot.create :item_2, name: 'Item2'
-        cart_item_dup = FactoryBot.create :cart_order_item, cart_order: cart, type: 'CartItem', item: item
+      before do
+        cart_item.cart_order = cart
+        cart_item_dup.cart_order = cart
         cart.total_price = 400
+        cart_item.save
+        cart_item_dup.save
         cart.save
+      end
+
+      it 'does not delete cart' do
+        old_count = cart.cart_order_items.count
         delete :destroy, params: { id: cart_item.id }
         old_price = cart.total_price
         cart.reload
+        expect(cart.cart_order_items.count).not_to eq(old_count)
+        expect(cart.cart_order_items.count).to eq(1)
         expect(cart.total_price).not_to eq(old_price)
-        expect(cart_item_dup).not_to eq(nil)
+        expect(cart_item_dup.reload).not_to eq(nil)
+        expect { cart_item.reload }.to raise_exception(ActiveRecord::RecordNotFound)
       end
     end
 

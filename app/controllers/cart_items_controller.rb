@@ -5,7 +5,7 @@ class CartItemsController < ApplicationController
   before_action :find_cart_item_and_cart, only: %i[update destroy]
 
   def update
-    return if params[:quantity] == @cart_item.quantity || @cart.user_id != current_or_guest_user.id
+    return if params[:quantity].to_i == @cart_item.quantity || @cart.user_id != current_or_guest_user.id
 
     if params[:button] == 'add'
       adding_cart_action
