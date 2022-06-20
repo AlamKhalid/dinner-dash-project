@@ -76,7 +76,7 @@ RSpec.describe CartItemsController, type: :controller do
 
       it 'does not do anything if button action is not defined' do
         valid_params[:button] = ''
-        put :update, xhr: true, params: { id: cart_item.id, button: '', quantity: 2, format: 'js' }
+        put :update, xhr: true, params: valid_params
         old_qty = cart_item.quantity
         old_price = cart.total_price
         cart_item.reload
