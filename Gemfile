@@ -16,6 +16,9 @@ gem 'pg'
 gem 'devise'
 gem 'devise-guests'
 
+# CORS policy
+gem 'rack-cors'
+
 # cloudinary
 gem 'activestorage-cloudinary-service'
 gem 'cloudinary'

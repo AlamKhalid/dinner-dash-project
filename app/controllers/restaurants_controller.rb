@@ -51,6 +51,10 @@ class RestaurantsController < ApplicationController
 
   def show
     @items = @restaurant&.items&.where(retired: false)
+    respond_to do |format|
+      format.html
+      format.json { render json: { restaurant: @restaurant, items: @items } }
+    end
   end
 
   private
