@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Item < ApplicationRecord
+  after_find :add_item_picture_url
+
   belongs_to :restaurant
   has_and_belongs_to_many :categories
   has_many :cart_order_items
@@ -17,4 +19,8 @@ class Item < ApplicationRecord
   scope :not_retired, -> { where(retired: false) }
   scope :order_items, -> { includes(:cart_order_items).where(cart_order_items: { type: 'OrderItem' }) }
   scope :filter_category, ->(category_name) { includes(:categories).where(categories: { name: category_name }) }
+
+  def add_item_picture_url
+    self.item_picture_url = item_picture.attached? ? item_picture.service_url : ''
+  end
 end

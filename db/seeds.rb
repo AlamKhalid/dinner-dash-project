@@ -8,14 +8,22 @@
 # #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 # #   Character.create(name: 'Luke', movie: movies.first)
 
+# clear all data
+CartOrderItem.destroy_all
+CartOrder.destroy_all
+Item.destroy_all
+Restaurant.destroy_all
+Category.destroy_all
+User.destroy_all
+
 # Restaurants seed
-# Restaurant.destroy_all
+
 ranchers = Restaurant.create(name: 'Ranchers', location: 'Islamabad')
 kfc = Restaurant.create(name: 'KFC', location: 'Islamabad')
 pizza_hut = Restaurant.create(name: 'Pizza Hut', location: 'Islamabad')
 
 # Category seed
-# Category.destroy_all
+
 Category.create(name: 'Fast Food')
 Category.create(name: 'Pakistani')
 Category.create(name: 'Chinese')

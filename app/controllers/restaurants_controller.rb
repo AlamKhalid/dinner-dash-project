@@ -2,6 +2,8 @@
 
 # Controller for restaurants
 class RestaurantsController < ApplicationController
+  before_action { ActiveStorage::Current.host = request.base_url }
+
   before_action :authorize_admin, only: %i[new edit create update]
   before_action :find_restaurant, only: %i[update show edit]
 
@@ -53,7 +55,7 @@ class RestaurantsController < ApplicationController
     @items = @restaurant&.items&.where(retired: false)
     respond_to do |format|
       format.html
-      format.json { render json: { restaurant: @restaurant, items: @items } }
+      format.json { render json: { restaurant: @restaurant, items: @items, include: [:item_picture] } }
     end
   end
 
