@@ -4,8 +4,12 @@
 class CartItemsController < ApplicationController
   before_action :find_cart_item_and_cart, only: %i[update destroy]
 
+  skip_before_action :verify_authenticity_token, only: %i[update destroy]
+
   def update
-    return if params[:quantity] == @cart_item.quantity || @cart.user_id != current_or_guest_user.id
+    if params[:quantity] == @cart_item.quantity || @cart.user_id != (params[:user_id] || current_or_guest_user.id)
+      return
+    end
 
     if params[:button] == 'add'
       adding_cart_action
@@ -16,17 +20,21 @@ class CartItemsController < ApplicationController
 
     respond_to do |format|
       format.js
+      format.json { render json: @cart, include: %i[cart_order_items items] }
     end
   end
 
   def destroy
-    return if @cart.user_id != current_or_guest_user.id
+    return if @cart.user_id != (params[:user_id] || current_or_guest_user.id)
 
     if @cart_item.destroy
       check_exisiting_cart
       flash[:notice] = 'Cart item deleted successfully'
     end
-    redirect_to carts_path
+    respond_to do |format|
+      format.html { redirect_to carts_path }
+      format.json { head :no_content }
+    end
   end
 
   private

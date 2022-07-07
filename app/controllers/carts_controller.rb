@@ -4,27 +4,39 @@
 class CartsController < ApplicationController
   before_action :find_cart, only: %i[destroy]
 
+  skip_before_action :verify_authenticity_token, only: %i[create destroy]
+
   def index
-    @cart = Cart.includes(:cart_order_items, :items).find_by(user_id: current_or_guest_user.id)
+    @cart = Cart.includes(:cart_order_items, :items).find_by(user_id: params[:user_id] || current_or_guest_user.id)
+    respond_to do |format|
+      format.html
+      format.json { render json: @cart, include: %i[cart_order_items items] }
+    end
   end
 
   def create
     return if Item.find_by(id: params[:item_id])&.retired
 
     success_flash
-    @cart = Cart.find_by(user_id: current_or_guest_user.id)
+    @cart = Cart.find_by(user_id: params[:user_id] || current_or_guest_user.id)
     cart_create_action
     @item_count = @cart.cart_order_items.count
     respond_to do |format|
       format.js
+      format.json { render json: { success: true, item_count: @item_count } }
     end
   end
 
   def destroy
-    return if @cart.nil? || @cart.user_id != current_or_guest_user.id
+    return if @cart.nil?
+
+    # || @cart.user_id != (params[:user_id] || current_or_guest_user.id)
 
     @cart.destroy ? flash[:notice] = 'Cart deleted successfully' : flash[:alert] = 'An error occured'
-    redirect_to carts_path
+    respond_to do |format|
+      format.html { redirect_to carts_path }
+      format.json { head :no_content }
+    end
   end
 
   private
@@ -32,7 +44,7 @@ class CartsController < ApplicationController
   def cart_create_action
     if @cart.nil?
       create_new_cart
-    elsif @cart.restaurant_id == params[:restaurant_id].to_i && @cart.user_id == current_or_guest_user.id
+    elsif @cart.restaurant_id == params[:restaurant_id].to_i && @cart.user_id == (params[:user_id] || current_or_guest_user.id)
       create_or_update_cart_item
     else
       error_flash
@@ -58,7 +70,7 @@ class CartsController < ApplicationController
 
   def cart_creation
     @cart = Cart.new
-    @cart.user_id = current_or_guest_user.id
+    @cart.user_id = params[:user_id] || current_or_guest_user.id
     @cart.restaurant_id = params[:restaurant_id]
     @cart.total_price += params[:quantity].to_i * Item.find_by(id: params[:item_id])&.price
   end

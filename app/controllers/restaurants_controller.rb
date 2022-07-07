@@ -7,6 +7,8 @@ class RestaurantsController < ApplicationController
   before_action :authorize_admin, only: %i[new edit create update]
   before_action :find_restaurant, only: %i[update show edit]
 
+  skip_before_action :verify_authenticity_token, only: %i[category_filter]
+
   def index
     @restaurants = Restaurant.all
   end
@@ -48,6 +50,7 @@ class RestaurantsController < ApplicationController
     filter_items_by_category
     respond_to do |format|
       format.js
+      format.json { render json: @items }
     end
   end
 

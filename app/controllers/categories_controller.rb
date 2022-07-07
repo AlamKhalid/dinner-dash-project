@@ -6,7 +6,7 @@ class CategoriesController < ApplicationController
   before_action :find_category, only: %i[edit update destroy]
 
   def index
-    @categories = Category.order(:name)
+    @categories = Category.pluck(:name)
     respond_to do |format|
       format.json { render json: @categories }
     end
