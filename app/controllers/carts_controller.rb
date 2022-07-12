@@ -7,7 +7,7 @@ class CartsController < ApplicationController
   skip_before_action :verify_authenticity_token, only: %i[create destroy]
 
   def index
-    @cart = Cart.includes(:cart_order_items, :items).find_by(user_id: params[:user_id] || current_or_guest_user.id)
+    @cart = Cart.includes(:cart_order_items, :items).find_by(user_id: check_params_user_id)
     respond_to do |format|
       format.html
       format.json { render json: @cart, include: %i[cart_order_items items] }
@@ -18,7 +18,7 @@ class CartsController < ApplicationController
     return if Item.find_by(id: params[:item_id])&.retired
 
     success_flash
-    @cart = Cart.find_by(user_id: params[:user_id] || current_or_guest_user.id)
+    @cart = Cart.find_by(user_id: check_params_user_id)
     cart_create_action
     @item_count = @cart.cart_order_items.count
     respond_to do |format|
@@ -41,10 +41,14 @@ class CartsController < ApplicationController
 
   private
 
+  def check_params_user_id
+    params[:user_id] || current_or_guest_user.id
+  end
+
   def cart_create_action
     if @cart.nil?
       create_new_cart
-    elsif @cart.restaurant_id == params[:restaurant_id].to_i && @cart.user_id == (params[:user_id] || current_or_guest_user.id)
+    elsif @cart.restaurant_id == params[:restaurant_id].to_i && @cart.user_id == check_params_user_id
       create_or_update_cart_item
     else
       error_flash
@@ -70,7 +74,7 @@ class CartsController < ApplicationController
 
   def cart_creation
     @cart = Cart.new
-    @cart.user_id = params[:user_id] || current_or_guest_user.id
+    @cart.user_id = check_params_user_id
     @cart.restaurant_id = params[:restaurant_id]
     @cart.total_price += params[:quantity].to_i * Item.find_by(id: params[:item_id])&.price
   end

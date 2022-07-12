@@ -7,9 +7,7 @@ class CartItemsController < ApplicationController
   skip_before_action :verify_authenticity_token, only: %i[update destroy]
 
   def update
-    if params[:quantity] == @cart_item.quantity || @cart.user_id != (params[:user_id] || current_or_guest_user.id)
-      return
-    end
+    return if params[:quantity] == @cart_item.quantity || check_params_user_id
 
     if params[:button] == 'add'
       adding_cart_action
@@ -25,7 +23,7 @@ class CartItemsController < ApplicationController
   end
 
   def destroy
-    return if @cart.user_id != (params[:user_id] || current_or_guest_user.id)
+    return if check_params_user_id
 
     if @cart_item.destroy
       check_exisiting_cart
@@ -38,6 +36,10 @@ class CartItemsController < ApplicationController
   end
 
   private
+
+  def check_params_user_id
+    @cart.user_id != (params[:user_id] || current_or_guest_user.id)
+  end
 
   def check_exisiting_cart
     if CartItem.exists?(cart_order_id: @cart.id)
