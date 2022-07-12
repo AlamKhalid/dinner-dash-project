@@ -31,7 +31,7 @@ class CartItemsController < ApplicationController
     end
     respond_to do |format|
       format.html { redirect_to carts_path }
-      format.json { head :no_content }
+      format.json { render json: { message: 'Cart item deleted successfully' } }
     end
   end
 

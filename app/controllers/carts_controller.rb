@@ -35,7 +35,7 @@ class CartsController < ApplicationController
     @cart.destroy ? flash[:notice] = 'Cart deleted successfully' : flash[:alert] = 'An error occured'
     respond_to do |format|
       format.html { redirect_to carts_path }
-      format.json { head :no_content }
+      format.json { render json: { message: 'Cart deleted successfully' } }
     end
   end
 
