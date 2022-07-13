@@ -26,16 +26,30 @@ class CartItemsController < ApplicationController
     return if check_params_user_id
 
     if @cart_item.destroy
-      check_exisiting_cart
-      flash[:notice] = 'Cart item deleted successfully'
+      destroy_success
+    else
+      destroy_fail
     end
     respond_to do |format|
       format.html { redirect_to carts_path }
-      format.json { render json: { message: 'Cart item deleted successfully' } }
+      format.json { render json: @payload }
     end
   end
 
   private
+
+  def destroy_success
+    check_exisiting_cart
+    msg = 'Cart item deleted successfully'
+    flash[:notice] = msg
+    @payload = { message: msg }
+  end
+
+  def destroy_fail
+    msg = 'Could not delete cart item'
+    flash[:alert] = msg
+    @payload = { error: msg, status: 422 }
+  end
 
   def check_params_user_id
     @cart.user_id != (params[:user_id] || current_or_guest_user.id)

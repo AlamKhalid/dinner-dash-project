@@ -23,7 +23,7 @@ class CartsController < ApplicationController
     @item_count = @cart.cart_order_items.count
     respond_to do |format|
       format.js
-      format.json { render json: { success: true, item_count: @item_count } }
+      format.json { render json: { success: @success, item_count: @item_count } }
     end
   end
 
@@ -32,14 +32,30 @@ class CartsController < ApplicationController
 
     # || @cart.user_id != (params[:user_id] || current_or_guest_user.id)
 
-    @cart.destroy ? flash[:notice] = 'Cart deleted successfully' : flash[:alert] = 'An error occured'
+    if @cart.destroy
+      destroy_success
+    else
+      destory_fail
+    end
     respond_to do |format|
       format.html { redirect_to carts_path }
-      format.json { render json: { message: 'Cart deleted successfully' } }
+      format.json { render json: @payload }
     end
   end
 
   private
+
+  def destroy_success
+    msg = 'Cart deleted successfully'
+    flash[:notice] = msg
+    @payload = { message: msg }
+  end
+
+  def destory_fail
+    msg = 'An error occured'
+    flash[:alert] = msg
+    @payload = { message: msg }
+  end
 
   def check_params_user_id
     params[:user_id] || current_or_guest_user.id
@@ -58,11 +74,13 @@ class CartsController < ApplicationController
   def error_flash
     @flash_msg = 'Item from different restaurant already exists in cart'
     @class_alert = 'alert-danger'
+    @success = false
   end
 
   def success_flash
     @flash_msg = 'Item added to cart successfully'
     @class_alert = 'alert-success'
+    @success = true
   end
 
   def create_new_cart
