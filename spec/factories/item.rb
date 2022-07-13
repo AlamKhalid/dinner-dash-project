@@ -13,7 +13,7 @@ FactoryBot.define do
     price { 200 }
   end
 
-  factory :item_2, class: Item do
+  factory :item2, class: Item do
     categories { [category] }
     association :restaurant
     name { Faker::Food.name }
