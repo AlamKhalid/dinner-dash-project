@@ -7,7 +7,8 @@ class CartsController < ApplicationController
   skip_before_action :verify_authenticity_token, only: %i[create destroy]
 
   def index
-    @cart = Cart.includes(:cart_order_items, :items).find_by(user_id: check_params_user_id)
+    @cart = Cart.includes(:cart_order_items,
+                          :items).find_by(user_id: check_params_user_id)
     respond_to do |format|
       format.html
       format.json { render json: @cart, include: %i[cart_order_items items] }
