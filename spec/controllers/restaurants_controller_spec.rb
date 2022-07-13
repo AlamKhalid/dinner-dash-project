@@ -6,7 +6,9 @@ RSpec.describe RestaurantsController, type: :controller do
   let(:user) { FactoryBot.create :user }
   let(:admin) { FactoryBot.create :admin }
   let(:restaurant) { FactoryBot.create :restaurant }
+  let(:category) { FactoryBot.create :category, name: 'Cat300' }
   let(:item) { FactoryBot.create :item, restaurant: restaurant }
+  let(:item2) { FactoryBot.create :item2, name: 'Item222', restaurant: restaurant, categories: [category] }
   let(:order) { FactoryBot.create :cart_order, type: 'Order', user: user, restaurant: restaurant, status: 'ordered' }
   let(:order_item) { FactoryBot.create :cart_order_item, cart_order: order, item: item, type: 'OrderItem' }
 
@@ -37,19 +39,18 @@ RSpec.describe RestaurantsController, type: :controller do
 
       it 'redirects to root path' do
         get :new
+        expect(controller).to use_before_action(:authorize_admin)
         expect(response.status).to eq(302)
         expect(response).to redirect_to(root_path)
       end
     end
 
     context 'with admin users' do
-      before do
-        allow(controller).to receive(:current_user).and_return(admin)
-        allow(controller).to receive(:authorize_admin).and_return(true)
-      end
+      before { allow(controller).to receive(:current_user).and_return(admin) }
 
       it 'returns successfull with new template and restaurant for admin' do
         get :new
+        expect(controller).to use_before_action(:authorize_admin)
         expect(response).to be_successful
         expect(response.status).to eq(200)
         expect(response).to render_template('new')
@@ -64,6 +65,7 @@ RSpec.describe RestaurantsController, type: :controller do
 
       it 'redirects to root path' do
         post :create
+        expect(controller).to use_before_action(:authorize_admin)
         expect(response.status).to eq(302)
         expect(response).to redirect_to(root_path)
       end
@@ -74,6 +76,7 @@ RSpec.describe RestaurantsController, type: :controller do
 
       it 'redirects to root path' do
         post :create
+        expect(controller).to use_before_action(:authorize_admin)
         expect(response.status).to eq(302)
         expect(response).to redirect_to(root_path)
       end
@@ -89,10 +92,7 @@ RSpec.describe RestaurantsController, type: :controller do
         }
       end
 
-      before do
-        allow(controller).to receive(:current_user).and_return(admin)
-        allow(controller).to receive(:authorize_admin).and_return(true)
-      end
+      before { allow(controller).to receive(:current_user).and_return(admin) }
 
       it 'creates a new restaurant in database' do
         expect { post :create, params: valid_params }.to change(Restaurant, :count).by(1)
@@ -100,6 +100,7 @@ RSpec.describe RestaurantsController, type: :controller do
 
       it 'creates a restaurant with correct attributes, flash and redirection' do
         post :create, params: valid_params
+        expect(controller).to use_before_action(:authorize_admin)
         expect(Restaurant.last).to have_attributes valid_params[:restaurant]
         expect(response.status).to eq(302)
         expect(response).to redirect_to(admins_index_path)
@@ -122,6 +123,8 @@ RSpec.describe RestaurantsController, type: :controller do
 
       it 'redirects to root path' do
         get :edit, params: { id: restaurant.id }
+        expect(controller).to use_before_action(:authorize_admin)
+        expect(controller).to use_before_action(:find_restaurant)
         expect(response.status).to eq(302)
         expect(response).to redirect_to(root_path)
       end
@@ -132,19 +135,20 @@ RSpec.describe RestaurantsController, type: :controller do
 
       it 'redirects to root path' do
         get :edit, params: { id: restaurant.id }
+        expect(controller).to use_before_action(:authorize_admin)
+        expect(controller).to use_before_action(:find_restaurant)
         expect(response.status).to eq(302)
         expect(response).to redirect_to(root_path)
       end
     end
 
     context 'with admin users' do
-      before do
-        allow(controller).to receive(:current_user).and_return(admin)
-        allow(controller).to receive(:authorize_admin).and_return(true)
-      end
+      before { allow(controller).to receive(:current_user).and_return(admin) }
 
       it 'returns successful' do
         get :edit, params: { id: restaurant.id }
+        expect(controller).to use_before_action(:authorize_admin)
+        expect(controller).to use_before_action(:find_restaurant)
         expect(response).to be_successful
         expect(response.status).to eq(200)
         expect(response).to render_template('edit')
@@ -154,11 +158,24 @@ RSpec.describe RestaurantsController, type: :controller do
   end
 
   describe '#PUT update' do
+    let(:updated_params) do
+      {
+        id: restaurant.id,
+        restaurant: {
+          name: 'Ranchers',
+          location: 'Islamabad'
+        },
+        format: 'js'
+      }
+    end
+
     context 'with unauthenticated users' do
       before { allow(controller).to receive(:current_user).and_return(nil) }
 
       it 'redirects to root path' do
-        put :update, params: { id: restaurant.id, restaurant: restaurant }
+        put :update, params: updated_params
+        expect(controller).to use_before_action(:authorize_admin)
+        expect(controller).to use_before_action(:find_restaurant)
         expect(response.status).to eq(302)
         expect(response).to redirect_to(root_path)
       end
@@ -168,27 +185,21 @@ RSpec.describe RestaurantsController, type: :controller do
       before { allow(controller).to receive(:current_user).and_return(user) }
 
       it 'redirects to root path' do
-        put :update, params: { id: restaurant.id, restaurant: restaurant }
+        put :update, params: updated_params
+        expect(controller).to use_before_action(:authorize_admin)
+        expect(controller).to use_before_action(:find_restaurant)
         expect(response.status).to eq(302)
         expect(response).to redirect_to(root_path)
       end
     end
 
     context 'with admin users' do
-      let(:updated_params) do
-        {
-          name: 'Ranchers',
-          location: 'Islamabad'
-        }
-      end
-
-      before do
-        allow(controller).to receive(:current_user).and_return(admin)
-        allow(controller).to receive(:authorize_admin).and_return(true)
-      end
+      before { allow(controller).to receive(:current_user).and_return(admin) }
 
       it 'returns successful with update template and correct variables' do
-        put :update, params: { id: restaurant.id, restaurant: updated_params, format: 'js' }
+        put :update, params: updated_params
+        expect(controller).to use_before_action(:authorize_admin)
+        expect(controller).to use_before_action(:find_restaurant)
         expect(response).to be_successful
         expect(response.status).to eq(200)
         expect(response).to render_template('update')
@@ -200,13 +211,18 @@ RSpec.describe RestaurantsController, type: :controller do
       end
 
       it 'returns 404 for invalid restaurant id' do
-        put :update, params: { id: -1, restaurant: updated_params, format: 'js' }
+        updated_params[:id] = -1
+        put :update, params: updated_params
+        expect(controller).to use_before_action(:authorize_admin)
+        expect(controller).to use_before_action(:find_restaurant)
         expect(response.status).to eq(404)
       end
 
       it 'populates error messages for invalid data' do
-        updated_params[:name] = nil
-        put :update, params: { id: restaurant.id, restaurant: updated_params, format: 'js' }
+        updated_params[:restaurant][:name] = nil
+        put :update, params: updated_params
+        expect(controller).to use_before_action(:authorize_admin)
+        expect(controller).to use_before_action(:find_restaurant)
         expect(response).to be_successful
         expect(response.status).to eq(200)
         expect(response).to render_template('update')
@@ -219,37 +235,51 @@ RSpec.describe RestaurantsController, type: :controller do
   end
 
   describe '#PUT category_filter' do
+    let(:valid_params) do
+      {
+        restaurant_id: item.restaurant.id,
+        category_name: item.categories[0].name,
+        format: 'js'
+      }
+    end
+
     context 'when valid' do
       it 'returns items with specific category' do
-        put :category_filter, params: { restaurant_id: item.restaurant.id, category_name: item.categories[0].name,
-                                        format: 'js' }
+        put :category_filter, params: valid_params
         expect(response).to be_successful
         expect(response.status).to eq(200)
         expect(assigns(:items)).to eq([item])
+        expect(assigns(:items)).not_to include(item2)
       end
 
       it 'returns popular itmes' do
         order.save
         order_item.save
-        put :category_filter, xhr: true, params: { restaurant_id: restaurant.id, category_name: 'popular',
-                                                   format: 'js' }
+        valid_params[:category_name] = 'popular'
+        put :category_filter, params: valid_params
         expect(response).to be_successful
         expect(response.status).to eq(200)
         expect(assigns(:items)).to eq([item])
+        expect(assigns(:items)).not_to include(item2)
       end
 
       it 'returns all items for all category' do
-        put :category_filter, params: { restaurant_id: restaurant.id, category_name: 'all', format: 'js' }
+        valid_params[:category_name] = 'all'
+        put :category_filter, params: valid_params
         expect(response).to be_successful
         expect(response.status).to eq(200)
         expect(assigns(:items)).to eq(restaurant.items)
+        expect(assigns(:items)).to include(item)
       end
 
       it 'returns empty items array for non-existent category' do
-        put :category_filter, params: { restaurant_id: restaurant.id, category_name: 'nil', format: 'js' }
+        valid_params[:category_name] = 'nil'
+        put :category_filter, params: valid_params
         expect(response).to be_successful
         expect(response.status).to eq(200)
         expect(assigns(:items)).to eq([])
+        expect(assigns(:items)).not_to include(item)
+        expect(assigns(:items)).not_to include(item2)
       end
     end
   end
@@ -258,6 +288,7 @@ RSpec.describe RestaurantsController, type: :controller do
     context 'when id is valid' do
       it 'returns successful response and sets restaurant and items' do
         get :show, params: { id: restaurant.id }
+        expect(controller).to use_before_action(:find_restaurant)
         expect(response).to be_successful
         expect(response.status).to eq(200)
         expect(assigns(:restaurant)).to eq(restaurant)
@@ -268,6 +299,7 @@ RSpec.describe RestaurantsController, type: :controller do
     context 'when id is invalid' do
       it 'returns 404 for invalid id' do
         get :show, params: { id: -1 }
+        expect(controller).to use_before_action(:find_restaurant)
         expect(response.status).to eq(404)
         expect(assigns(:restaurant)).to eq(nil)
         expect(assigns(:items)).to eq(nil)
