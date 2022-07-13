@@ -4,8 +4,10 @@
 class CartItemsController < ApplicationController
   before_action :find_cart_item_and_cart, only: %i[update destroy]
 
+  skip_before_action :verify_authenticity_token, only: %i[update destroy]
+
   def update
-    return if params[:quantity].to_i == @cart_item.quantity || @cart.user_id != current_or_guest_user.id
+    return if params[:quantity] == @cart_item.quantity || check_params_user_id
 
     if params[:button] == 'add'
       adding_cart_action
@@ -16,20 +18,42 @@ class CartItemsController < ApplicationController
 
     respond_to do |format|
       format.js
+      format.json { render json: @cart, include: %i[cart_order_items items] }
     end
   end
 
   def destroy
-    return if @cart.user_id != current_or_guest_user.id
+    return if check_params_user_id
 
     if @cart_item.destroy
-      check_exisiting_cart
-      flash[:notice] = 'Cart item deleted successfully'
+      destroy_success
+    else
+      destroy_fail
     end
-    redirect_to carts_path
+    respond_to do |format|
+      format.html { redirect_to carts_path }
+      format.json { render json: @payload }
+    end
   end
 
   private
+
+  def destroy_success
+    check_exisiting_cart
+    msg = 'Cart item deleted successfully'
+    flash[:notice] = msg
+    @payload = { message: msg }
+  end
+
+  def destroy_fail
+    msg = 'Could not delete cart item'
+    flash[:alert] = msg
+    @payload = { error: msg, status: 422 }
+  end
+
+  def check_params_user_id
+    @cart.user_id != (params[:user_id] || current_or_guest_user.id)
+  end
 
   def check_exisiting_cart
     if CartItem.exists?(cart_order_id: @cart.id)

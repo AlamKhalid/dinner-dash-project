@@ -2,8 +2,12 @@
 
 # Controller for restaurants
 class RestaurantsController < ApplicationController
+  before_action { ActiveStorage::Current.host = request.base_url }
+
   before_action :authorize_admin, only: %i[new edit create update]
   before_action :find_restaurant, only: %i[update show edit]
+
+  skip_before_action :verify_authenticity_token, only: %i[category_filter]
 
   def index
     @restaurants = Restaurant.all
@@ -46,11 +50,16 @@ class RestaurantsController < ApplicationController
     filter_items_by_category
     respond_to do |format|
       format.js
+      format.json { render json: @items }
     end
   end
 
   def show
     @items = @restaurant&.items&.where(retired: false)
+    respond_to do |format|
+      format.html
+      format.json { render json: { restaurant: @restaurant, items: @items, include: [:item_picture] } }
+    end
   end
 
   private

@@ -3,7 +3,7 @@
 class CartOrder < ApplicationRecord
   belongs_to :user
   belongs_to :restaurant
-  has_many :cart_order_items, dependent: :destroy
+  has_many :cart_order_items, -> { order(:id) }, dependent: :destroy
   has_many :items, through: :cart_order_items
 
   validates :user_id, :total_price, :type, :restaurant_id, presence: true

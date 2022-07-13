@@ -4,35 +4,68 @@
 class CartsController < ApplicationController
   before_action :find_cart, only: %i[destroy]
 
+  skip_before_action :verify_authenticity_token, only: %i[create destroy]
+
   def index
-    @cart = Cart.includes(:cart_order_items, :items).find_by(user_id: current_or_guest_user.id)
+    @cart = Cart.includes(:cart_order_items,
+                          :items).find_by(user_id: check_params_user_id)
+    respond_to do |format|
+      format.html
+      format.json { render json: @cart, include: %i[cart_order_items items] }
+    end
   end
 
   def create
     return if Item.find_by(id: params[:item_id])&.retired
 
     success_flash
-    @cart = Cart.find_by(user_id: current_or_guest_user.id)
+    @cart = Cart.find_by(user_id: check_params_user_id)
     cart_create_action
     @item_count = @cart.cart_order_items.count
     respond_to do |format|
       format.js
+      format.json { render json: { success: @success, item_count: @item_count } }
     end
   end
 
   def destroy
-    return if @cart.nil? || @cart.user_id != current_or_guest_user.id
+    return if @cart.nil?
 
-    @cart.destroy ? flash[:notice] = 'Cart deleted successfully' : flash[:alert] = 'An error occured'
-    redirect_to carts_path
+    # || @cart.user_id != (params[:user_id] || current_or_guest_user.id)
+
+    if @cart.destroy
+      destroy_success
+    else
+      destory_fail
+    end
+    respond_to do |format|
+      format.html { redirect_to carts_path }
+      format.json { render json: @payload }
+    end
   end
 
   private
 
+  def destroy_success
+    msg = 'Cart deleted successfully'
+    flash[:notice] = msg
+    @payload = { message: msg }
+  end
+
+  def destory_fail
+    msg = 'An error occured'
+    flash[:alert] = msg
+    @payload = { message: msg }
+  end
+
+  def check_params_user_id
+    params[:user_id] || current_or_guest_user.id
+  end
+
   def cart_create_action
     if @cart.nil?
       create_new_cart
-    elsif @cart.restaurant_id == params[:restaurant_id].to_i && @cart.user_id == current_or_guest_user.id
+    elsif @cart.restaurant_id == params[:restaurant_id].to_i && @cart.user_id == check_params_user_id
       create_or_update_cart_item
     else
       error_flash
@@ -42,11 +75,13 @@ class CartsController < ApplicationController
   def error_flash
     @flash_msg = 'Item from different restaurant already exists in cart'
     @class_alert = 'alert-danger'
+    @success = false
   end
 
   def success_flash
     @flash_msg = 'Item added to cart successfully'
     @class_alert = 'alert-success'
+    @success = true
   end
 
   def create_new_cart
@@ -58,7 +93,7 @@ class CartsController < ApplicationController
 
   def cart_creation
     @cart = Cart.new
-    @cart.user_id = current_or_guest_user.id
+    @cart.user_id = check_params_user_id
     @cart.restaurant_id = params[:restaurant_id]
     @cart.total_price += params[:quantity].to_i * Item.find_by(id: params[:item_id])&.price
   end

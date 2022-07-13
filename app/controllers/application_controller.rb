@@ -23,7 +23,10 @@ class ApplicationController < ActionController::Base
   private
 
   def render_not_found_template
-    render file: Rails.root.join('public/404.html'), layout: false, status: :not_found
+    respond_to do |format|
+      format.html { render file: Rails.root.join('public/404.html'), layout: false, status: :not_found }
+      format.json { render json: { error: 'Resource not found' }, status: :not_found }
+    end
   end
 
   def user_not_authorized(exception)

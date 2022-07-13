@@ -2,8 +2,15 @@
 
 # Controller for category
 class CategoriesController < ApplicationController
-  before_action :authorize_admin
+  before_action :authorize_admin, except: :index
   before_action :find_category, only: %i[edit update destroy]
+
+  def index
+    @categories = Category.pluck(:name)
+    respond_to do |format|
+      format.json { render json: @categories }
+    end
+  end
 
   def new
     @category = Category.new
